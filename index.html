@@ -211,6 +211,7 @@
         body: JSON.stringify({ username, email, password })
       });
       const data = await res.json();
+      window.activeStories = data.stories || [];
       if (!res.ok) { msg.style.color = "#ff5252"; msg.textContent = data.error || "Failed"; return; }
       currentUser = data;
       localStorage.setItem("momento_user", JSON.stringify(currentUser));
@@ -342,6 +343,7 @@
   async function loadFeed() {
       const res = await fetch(API + "/api/feed/");
       const data = await res.json();
+      window.activeStories = data.stories || [];
       const storiesBar = document.getElementById("storiesBar");
     storiesBar.innerHTML = (data.stories || []).map(s => `
       <div class="story-item"><img src="${s.image_url}" /><div style="font-size:11px;">${s.username}</div></div>
