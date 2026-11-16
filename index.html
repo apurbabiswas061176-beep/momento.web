@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -121,13 +121,13 @@
         <p id="dpMsg" class="status"></p>
       </div>
     </div>
-    <label style="display:block;margin-top:12px;font-size:13px;">Current Vibe / Mood Aura: <strong id="currentMoodLabel" style="color:var(--aura-color);">ðŸŒŠ Chill</strong></label>
+    <label style="display:block;margin-top:12px;font-size:13px;">Current Vibe / Mood Aura: <strong id="currentMoodLabel" style="color:var(--aura-color);">🌊 Chill</strong></label>
     <div class="mood-bar">
-      <button type="button" class="mood-btn" onclick="setMood('chill')">ðŸŒŠ Chill</button>
+      <button type="button" class="mood-btn" onclick="setMood('chill')">🌊 Chill</button>
       <button type="button" class="mood-btn" onclick="setMood('hyped')">âš¡ Hyped</button>
       <button type="button" class="mood-btn" onclick="setMood('focused')">ðŸŽ¯ Focused</button>
       <button type="button" class="mood-btn" onclick="setMood('nostalgic')">ðŸ“¼ Nostalgic</button>
-      <button type="button" class="mood-btn" onclick="setMood('night_owl')">ðŸ¦‰ Night Owl</button>
+      <button type="button" class="mood-btn" onclick="setMood('night_owl')">🦉 Night Owl</button>
     </div>
       </div>
 
@@ -152,7 +152,7 @@
   <div id="bottomNav" style="position:fixed;bottom:0;left:0;right:0;height:58px;background:rgba(15,15,20,0.96);backdrop-filter:blur(12px);border-top:1px solid #26262e;display:flex;align-items:center;justify-content:space-around;z-index:900;">
     <button type="button" onclick="navHome()" style="width:auto;background:transparent;color:#fff;font-size:22px;padding:6px 18px;margin:0;" title="Home">ðŸ </button>
     <button type="button" onclick="openCreatePicker()" style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#ec4899,#8b5cf6,#38bdf8);color:#fff;font-size:26px;font-weight:bold;display:flex;align-items:center;justify-content:center;padding:0;margin:0;box-shadow:0 0 16px rgba(139,92,246,0.6);" title="Create">+</button>
-    <button type="button" onclick="navProfile()" style="width:auto;background:transparent;color:#fff;font-size:22px;padding:6px 18px;margin:0;" title="Profile">ðŸ‘¤</button>
+    <button type="button" onclick="navProfile()" style="width:auto;background:transparent;color:#fff;font-size:22px;padding:6px 18px;margin:0;" title="Profile">👤</button>
   </div>
 
   <!-- Instagram-Style "+" Option Picker Sheet (Post vs Reel) -->
@@ -584,11 +584,11 @@
     }
 
       const MOOD_MAP = {
-    chill: { label: "ðŸŒŠ Chill", color: "#38bdf8" },
+    chill: { label: "🌊 Chill", color: "#38bdf8" },
     hyped: { label: "âš¡ Hyped", color: "#facc15" },
     focused: { label: "ðŸŽ¯ Focused", color: "#a855f7" },
     nostalgic: { label: "ðŸ“¼ Nostalgic", color: "#fb7185" },
-    night_owl: { label: "ðŸ¦‰ Night Owl", color: "#34d399" }
+    night_owl: { label: "🦉 Night Owl", color: "#34d399" }
   };
 
   function applyMoodUI(moodKey) {
