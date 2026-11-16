@@ -849,28 +849,41 @@ _prevInitAppMem();
 loadUserMemories();
 };
 
-// Live Location Detection at Top of Profile
+// Live Location Detection at Top of Profile (City, State, Country)
 async function detectUserLocation(forceRefresh = false) {
   const locEl = document.getElementById("locationText");
   if (!locEl) return;
   const saved = localStorage.getItem("momento_location");
-  if (saved && !forceRefresh) { locEl.textContent = saved; }
+  if (saved && !saved.match(/^\d+\.\d+/) && !forceRefresh) { locEl.textContent = saved; }
   if (!navigator.geolocation) { locEl.textContent = saved || "Location unavailable"; return; }
-  if (forceRefresh) locEl.textContent = "Updating location...";
+  if (forceRefresh || !saved || saved.match(/^\d+\.\d+/)) locEl.textContent = "Finding city...";
   navigator.geolocation.getCurrentPosition(
     async (pos) => {
       const { latitude, longitude } = pos.coords;
+      let placeName = "";
       try {
-        const res = await fetch(`https://bigdatacloud.net{latitude}&longitude=${longitude}&localityLanguage=en`);
-        const data = await res.json();
-        const exactPlace = [data.locality || data.city, data.principalSubdivision, data.countryName].filter(Boolean).join(", ");
-        const finalLoc = exactPlace || `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
-        locEl.textContent = finalLoc;
-        localStorage.setItem("momento_location", finalLoc);
-      } catch (e) {
-        const coords = `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
-        locEl.textContent = coords;
+        const osmRes = await fetch(`https://openstreetmap.org{latitude}&lon=${longitude}&accept-language=en`);
+        if (osmRes.ok) {
+          const osm = await osmRes.json();
+          const a = osm.address || {};
+          const city = a.city || a.town || a.suburb || a.municipality || a.village || a.county;
+          const state = a.state;
+          const country = a.country;
+          placeName = [city, state, country].filter(Boolean).join(", ");
+        }
+      } catch (e) {}
+      if (!placeName) {
+        try {
+          const bdcRes = await fetch(`https://bigdatacloud.net{latitude}&longitude=${longitude}&localityLanguage=en`);
+          if (bdcRes.ok) {
+            const bdc = await bdcRes.json();
+            placeName = [bdc.city || bdc.locality, bdc.principalSubdivision, bdc.countryName].filter(Boolean).join(", ");
+          }
+        } catch (e) {}
       }
+      const finalLoc = placeName || "Location detected";
+      locEl.textContent = finalLoc;
+      localStorage.setItem("momento_location", finalLoc);
     },
     () => {
       if (!saved) locEl.textContent = "Tap to allow location";
