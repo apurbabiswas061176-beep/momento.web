@@ -99,7 +99,51 @@
         </div>
       </div>
 
-    <!-- Instagram-style Edit Profile Modal -->
+          <div id="memoriesSection" style="margin-top:12px;background:#1c1c22;border:1px solid #2e2e36;border-radius:10px;padding:10px;">
+        <div style="font-size:12px;color:#a1a1aa;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">
+          <span>Memories</span>
+          <span id="memoryCount" style="color:#71717a;"></span>
+        </div>
+        <div id="memoriesStrip" style="display:flex;gap:12px;overflow-x:auto;padding-bottom:4px;align-items:flex-start;">
+          <div onclick="openAddMemoryModal()" style="cursor:pointer;text-align:center;min-width:60px;">
+            <div style="width:54px;height:54px;border-radius:50%;border:1.5px dashed #00d2ff;display:flex;align-items:center;justify-content:center;font-size:22px;color:#00d2ff;margin:0 auto 4px;">+</div>
+            <div style="font-size:11px;color:#d4d4d8;">New</div>
+          </div>
+          <div id="memoriesList" style="display:flex;gap:12px;"></div>
+        </div>
+      </div>
+
+      <!-- Add Memory Modal -->
+      <div id="addMemoryModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:999;align-items:center;justify-content:center;padding:16px;">
+        <div style="background:#16161a;border:1px solid #2e2e36;border-radius:16px;padding:18px;width:100%;max-width:360px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <strong style="font-size:15px;">Save a Memory</strong>
+            <button type="button" onclick="closeAddMemoryModal()" style="width:auto;background:transparent;color:#aaa;padding:4px 8px;font-size:18px;margin:0;">&#215;</button>
+          </div>
+          <input type="file" id="memoryFileInput" accept="image/*" style="margin-bottom:10px;font-size:12px;" />
+          <input type="text" id="memoryTitleInput" placeholder="Memory title (e.g., Goa Trip, Late Night)" maxlength="60" style="margin-bottom:8px;" />
+          <input type="text" id="memoryCaptionInput" placeholder="Short note (optional)" maxlength="220" style="margin-bottom:12px;" />
+          <button type="button" id="saveMemoryBtn" onclick="saveNewMemory()">Save to Profile</button>
+        </div>
+      </div>
+
+      <!-- View Memory Modal -->
+      <div id="viewMemoryModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:1000;align-items:center;justify-content:center;padding:16px;">
+        <div style="background:#16161a;border:1px solid #2e2e36;border-radius:16px;padding:16px;width:100%;max-width:380px;text-align:center;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <div style="text-align:left;">
+              <div id="viewMemTitle" style="font-weight:700;font-size:15px;"></div>
+              <div id="viewMemDate" style="font-size:11px;color:#888;"></div>
+            </div>
+            <button type="button" onclick="closeViewMemoryModal()" style="width:auto;background:transparent;color:#aaa;padding:4px 8px;font-size:18px;margin:0;">&#215;</button>
+          </div>
+          <img id="viewMemImg" src="" style="width:100%;max-height:320px;object-fit:cover;border-radius:12px;margin-bottom:10px;" />
+          <p id="viewMemCaption" style="font-size:13px;color:#d4d4d8;margin:0 0 12px;"></p>
+          <button type="button" id="deleteMemBtn" style="background:#3f1d24;color:#fda4af;font-size:12px;padding:8px;">Delete Memory</button>
+        </div>
+      </div>
+
+      <!-- Instagram-style Edit Profile Modal -->
     <div id="editModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:999;align-items:center;justify-content:center;padding:16px;">
       <div style="background:#16161a;border:1px solid #2e2e36;border-radius:16px;padding:20px;width:100%;max-width:380px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
@@ -693,7 +737,110 @@ initApp = function() {
   _prevInitApp();
   syncLinkedFriend();
 };
-</script>
+
+let userMemories = [];
+
+function openAddMemoryModal() {
+  document.getElementById("addMemoryModal").style.display = "flex";
+}
+function closeAddMemoryModal() {
+  document.getElementById("addMemoryModal").style.display = "none";
+}
+function closeViewMemoryModal() {
+  document.getElementById("viewMemoryModal").style.display = "none";
+}
+
+function renderMemoriesList() {
+  const list = document.getElementById("memoriesList");
+  const countEl = document.getElementById("memoryCount");
+  if (!list) return;
+Use code with caution.
+if (countEl) countEl.textContent = userMemories.length ? (userMemories.length + " saved") : "";
+list.innerHTML = userMemories.map((m, idx) => {
+const src = m.image_url.startsWith("http") ? m.image_url : (API + m.image_url);
+return <div onclick="openViewMemory(${idx})" style="cursor:pointer;text-align:center;min-width:60px;max-width:68px;"> <img src="${src}" style="width:54px;height:54px;border-radius:50%;object-fit:cover;border:2px solid var(--aura-color,#00d2ff);padding:2px;box-sizing:border-box;display:block;margin:0 auto 4px;" /> <div style="font-size:11px;color:#e4e4e7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${m.title}</div> </div>;
+}).join("");
+}
+function openViewMemory(idx) {
+const m = userMemories[idx];
+if (!m) return;
+const src = m.image_url.startsWith("http") ? m.image_url : (API + m.image_url);
+document.getElementById("viewMemTitle").textContent = m.title;
+document.getElementById("viewMemDate").textContent = m.created_at || "";
+document.getElementById("viewMemImg").src = src;
+document.getElementById("viewMemCaption").textContent = m.caption || "";
+document.getElementById("deleteMemBtn").onclick = () => deleteUserMemory(m.id);
+document.getElementById("viewMemoryModal").style.display = "flex";
+}
+async function loadUserMemories() {
+if (!currentUser || !currentUser.email) return;
+try {
+const res = await fetch(API + "/api/memories/?email=" + encodeURIComponent(currentUser.email));
+const data = await res.json();
+userMemories = data.memories || [];
+renderMemoriesList();
+} catch (e) { console.error("Memories load error", e); }
+}
+async function saveNewMemory() {
+if (!currentUser) return;
+const fileInput = document.getElementById("memoryFileInput");
+const titleVal = document.getElementById("memoryTitleInput").value.trim() || "Memory";
+const captionVal = document.getElementById("memoryCaptionInput").value.trim();
+const btn = document.getElementById("saveMemoryBtn");
+if (!fileInput.files || !fileInput.files[0]) return alert("Please pick a photo first.");
+btn.disabled = true;
+btn.textContent = "Saving...";
+const reader = new FileReader();
+reader.onload = async function() {
+try {
+const res = await fetch(API + "/api/memories/", {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+email: currentUser.email,
+title: titleVal,
+caption: captionVal,
+image: reader.result
+})
+});
+const data = await res.json();
+if (!res.ok) {
+alert(data.error || "Could not save memory");
+} else {
+userMemories.unshift(data.memory);
+renderMemoriesList();
+fileInput.value = "";
+document.getElementById("memoryTitleInput").value = "";
+document.getElementById("memoryCaptionInput").value = "";
+closeAddMemoryModal();
+}
+} catch (e) {
+alert("Network error saving memory");
+} finally {
+btn.disabled = false;
+btn.textContent = "Save to Profile";
+}
+};
+reader.readAsDataURL(fileInput.files[0]);
+}
+async function deleteUserMemory(id) {
+if (!currentUser) return;
+try {
+await fetch(API + "/api/memories/delete/", {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({ email: currentUser.email, id: id })
+});
+userMemories = userMemories.filter(m => m.id !== id);
+renderMemoriesList();
+closeViewMemoryModal();
+} catch (e) { console.error(e); }
+}
+const _prevInitAppMem = initApp;
+initApp = function() {
+_prevInitAppMem();
+loadUserMemories();
+};rn</script>
 </body>
 </html>
 
