@@ -764,7 +764,7 @@ function renderMemoriesList() {
 if (countEl) countEl.textContent = userMemories.length ? (userMemories.length + " saved") : "";
 list.innerHTML = userMemories.map((m, idx) => {
 const src = m.image_url.startsWith("http") ? m.image_url : (API + m.image_url);
-return <div onclick="openViewMemory(${idx})" style="cursor:pointer;text-align:center;min-width:60px;max-width:68px;"> <img src="${src}" style="width:54px;height:54px;border-radius:50%;object-fit:cover;border:2px solid var(--aura-color,#00d2ff);padding:2px;box-sizing:border-box;display:block;margin:0 auto 4px;" /> <div style="font-size:11px;color:#e4e4e7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${m.title}</div> </div>;
+return `<div onclick="openViewMemory(${idx})" style="cursor:pointer;text-align:center;min-width:60px;max-width:68px;"> <img src="${src}" style="width:54px;height:54px;border-radius:50%;object-fit:cover;border:2px solid var(--aura-color,#00d2ff);padding:2px;box-sizing:border-box;display:block;margin:0 auto 4px;" /> <div style="font-size:11px;color:#e4e4e7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${m.title}</div> </div>`;
 }).join("");
 }
 function openViewMemory(idx) {
