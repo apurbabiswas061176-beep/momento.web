@@ -761,7 +761,6 @@ function renderMemoriesList() {
   const list = document.getElementById("memoriesList");
   const countEl = document.getElementById("memoryCount");
   if (!list) return;
-Use code with caution.
 if (countEl) countEl.textContent = userMemories.length ? (userMemories.length + " saved") : "";
 list.innerHTML = userMemories.map((m, idx) => {
 const src = m.image_url.startsWith("http") ? m.image_url : (API + m.image_url);
