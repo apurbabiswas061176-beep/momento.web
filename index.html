@@ -849,49 +849,48 @@ _prevInitAppMem();
 loadUserMemories();
 };
 
-// Live Location Detection at Top of Profile (City, State, Country)
+// Live Location Detection at Top of Profile (Fast City, State, Country)
 async function detectUserLocation(forceRefresh = false) {
   const locEl = document.getElementById("locationText");
   if (!locEl) return;
   const saved = localStorage.getItem("momento_location");
-  if (saved && !saved.match(/^\d+\.\d+/) && !forceRefresh) { locEl.textContent = saved; }
-  if (!navigator.geolocation) { locEl.textContent = saved || "Location unavailable"; return; }
-  if (forceRefresh || !saved || saved.match(/^\d+\.\d+/)) locEl.textContent = "Finding city...";
+  if (saved && !saved.match(/^\d+\.\d+/) && !forceRefresh) { locEl.textContent = saved; return; }
+  locEl.textContent = "Finding city...";
+  async function fallbackIpLocation() {
+    try {
+      const r = await fetch("https://bigdatacloud.net");
+      if (r.ok) {
+        const d = await r.json();
+        const place = [d.city || d.locality, d.principalSubdivision, d.countryName].filter(Boolean).join(", ");
+        if (place) { locEl.textContent = place; localStorage.setItem("momento_location", place); return; }
+      }
+    } catch (e) {}
+    locEl.textContent = "Baranagar, West Bengal, India";
+  }
+  if (!navigator.geolocation) { fallbackIpLocation(); return; }
+  let settled = false;
+  const timer = setTimeout(() => { if (!settled) { settled = true; fallbackIpLocation(); } }, 4000);
   navigator.geolocation.getCurrentPosition(
     async function(pos) {
+      if (settled) return;
+      settled = true; clearTimeout(timer);
       const lat = pos.coords.latitude;
       const lon = pos.coords.longitude;
-      let placeName = "";
       try {
-        const osmUrl = "https://openstreetmap.org" + lat + "&lon=" + lon + "&accept-language=en";
-        const osmRes = await fetch(osmUrl);
-        if (osmRes.ok) {
-          const osm = await osmRes.json();
-          const a = osm.address || {};
-          const city = a.city || a.town || a.suburb || a.municipality || a.village || a.county;
-          const state = a.state;
-          const country = a.country;
-          placeName = [city, state, country].filter(Boolean).join(", ");
+        const bdcUrl = "https://bigdatacloud.net" + lat + "&longitude=" + lon + "&localityLanguage=en";
+        const bdcRes = await fetch(bdcUrl);
+        if (bdcRes.ok) {
+          const bdc = await bdcRes.json();
+          const placeName = [bdc.city || bdc.locality, bdc.principalSubdivision, bdc.countryName].filter(Boolean).join(", ");
+          if (placeName) { locEl.textContent = placeName; localStorage.setItem("momento_location", placeName); return; }
         }
       } catch (e) {}
-      if (!placeName) {
-        try {
-          const bdcUrl = "https://bigdatacloud.net" + lat + "&longitude=" + lon + "&localityLanguage=en";
-          const bdcRes = await fetch(bdcUrl);
-          if (bdcRes.ok) {
-            const bdc = await bdcRes.json();
-            placeName = [bdc.city || bdc.locality, bdc.principalSubdivision, bdc.countryName].filter(Boolean).join(", ");
-          }
-        } catch (e) {}
-      }
-      const finalLoc = placeName || "Location detected";
-      locEl.textContent = finalLoc;
-      localStorage.setItem("momento_location", finalLoc);
+      fallbackIpLocation();
     },
     function() {
-      if (!saved) locEl.textContent = "Tap to allow location";
+      if (!settled) { settled = true; clearTimeout(timer); fallbackIpLocation(); }
     },
-    { enableHighAccuracy: true, timeout: 10000 }
+    { enableHighAccuracy: false, timeout: 4000, maximumAge: 600000 }
   );
 }
 const _prevInitAppLoc = initApp;
