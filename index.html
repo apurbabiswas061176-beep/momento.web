@@ -247,7 +247,7 @@
   </div>
 
   <script>
-    const API = "https://momento-a7w2.onrender.com";
+    const API = "$realBackendUrl = (Get-Clipboard).Trim().TrimEnd('/') Write-Host "Using copied Render URL: $realBackendUrl" -ForegroundColor Cyan  $frontendFile = "C:\Users\ARUNAVA BISWAS\Desktop\momento-frontend\index.html" $html = [System.IO.File]::ReadAllText($frontendFile, [System.Text.Encoding]::UTF8) $html = [regex]::Replace($html, 'const API = "[^"]+";', "const API = `"$realBackendUrl`";") [System.IO.File]::WriteAllText($frontendFile, $html, (New-Object System.Text.UTF8Encoding $false))  cd "C:\Users\ARUNAVA BISWAS\Desktop\momento-frontend" git add . git commit -m "Update exact Render backend URL" git push ";
     let currentUser = JSON.parse(localStorage.getItem("momento_user") || "null");
 
     function toBase64(file) {
