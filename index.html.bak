@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Momento</title>
+  <style>
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #000; color: #fff; }
+    .container { max-width: 500px; margin: 0 auto; padding: 16px; }
+    .card { background: #121212; border: 1px solid #262626; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+    input, button { width: 100%; padding: 10px; margin: 6px 0; border-radius: 8px; border: 1px solid #333; background: #1e1e1e; color: #fff; box-sizing: border-box; }
+    button { background: #0095f6; border: none; font-weight: bold; cursor: pointer; }
+    button:hover { background: #1877f2; }
+    .row { display: flex; align-items: center; gap: 12px; }
+    .avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid #e1306c; background: #262626; }
+    .stories { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; }
+    .story-item { text-align: center; min-width: 72px; }
+    .story-item img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 3px solid #e1306c; }
+    .post-img { width: 100%; border-radius: 8px; margin-top: 10px; max-height: 450px; object-fit: cover; }
+    .hidden { display: none; }
+    .status { font-size: 13px; color: #00e676; margin-top: 6px; }
+    :root { --aura-color: #38bdf8; }
+  #userDp {
+    border: 3px solid var(--aura-color) !important;
+    box-shadow: 0 0 18px var(--aura-color), 0 0 6px var(--aura-color) !important;
+    transition: all 0.35s ease;
+  }
+  .mood-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .mood-btn {
+    width: auto !important; padding: 5px 10px !important; font-size: 12px !important;
+    border-radius: 999px !important; background: #1e1e24 !important;
+    border: 1px solid #333 !important; color: #fff !important; cursor: pointer;
+  }
+  .mood-btn:hover { border-color: var(--aura-color) !important; transform: translateY(-1px); }
+    @keyframes heartPop {
+      0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+      35% { transform: translate(-50%, -50%) scale(1.25); opacity: 1; }
+      70% { transform: translate(-50%, -50%) scale(0.95); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0; }
+    }
+    .heart-burst {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 74px;
+      pointer-events: none;
+      animation: heartPop 0.75s ease forwards;
+      filter: drop-shadow(0 0 18px rgba(236,72,153,0.9));
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 style="text-align:center;">Momento</h1>
+
+    <!-- Auth Section -->
+    <div id="authBox" class="card">
+      <h3>Login or Create Account</h3>
+      <input id="username" placeholder="Username (for signup)" />
+      <input id="email" type="email" placeholder="Email" />
+      <input id="password" type="password" placeholder="Password" />
+      <button onclick="auth('/api/login/')">Log In</button>
+      <button style="background:#333;" onclick="auth('/api/signup/')">Sign Up</button>
+      <p id="authMsg" class="status"></p>
+    </div>
+
+    <!-- Main App Section -->
+    <div id="appBox" class="hidden" style="padding-bottom:76px;">
+      <!-- Profile & Change DP -->
+      <div class="card">
+        <div class="row">
+        <div style="position:relative;display:inline-block;cursor:pointer;" onclick="openMyStory()">
+          <img id="userDp" class="avatar" src="" style="transition:0.25s;" />
+          <span onclick="event.stopPropagation();document.getElementById('storyInput').click();" title="Add to your story" style="position:absolute;bottom:2px;right:2px;width:22px;height:22px;border-radius:50%;background:#0095f6;color:#fff;font-weight:bold;font-size:15px;display:flex;align-items:center;justify-content:center;border:2px solid #16161a;">+</span>
+        </div>
+          <div>
+            <strong id="displayUser"></strong>
+        <div style="font-size:12px;color:#aaa;" id="displayEmail"></div>
+        <div id="displayBio" style="font-size:13px;color:#e5e7eb;margin-top:4px;white-space:pre-line;"></div>
+      </div>
+    </div>
+    <button type="button" onclick="openEditModal()" style="margin-top:12px;background:#26262e;border:1px solid #3f3f46;color:#fff;font-weight:600;border-radius:8px;padding:8px;">Edit Profile</button>
+
+    <!-- Instagram-style Edit Profile Modal -->
+    <div id="editModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:999;align-items:center;justify-content:center;padding:16px;">
+      <div style="background:#16161a;border:1px solid #2e2e36;border-radius:16px;padding:20px;width:100%;max-width:380px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <strong style="font-size:16px;">Edit Profile</strong>
+          <button type="button" onclick="closeEditModal()" style="width:auto;background:transparent;color:#aaa;padding:4px 8px;font-size:18px;">✕</button>
+        </div>
+        <div style="text-align:center;margin-bottom:14px;">
+          <img id="editPreview" src="" style="width:76px;height:76px;border-radius:50%;object-fit:cover;border:2px solid var(--aura-color);" />
+          <div style="margin-top:8px;">
+            <label for="dpInput" style="color:#38bdf8;font-size:13px;font-weight:600;cursor:pointer;">Change Profile Photo</label>
+            <input type="file" id="dpInput" accept="image/*" onchange="previewEditDp(this)" style="display:none;" />
+          </div>
+        </div>
+        <label style="font-size:12px;color:#aaa;">Username</label>
+        <input type="text" id="editUsername" placeholder="Username" />
+        <label style="font-size:12px;color:#aaa;margin-top:8px;display:block;">Bio</label>
+        <textarea id="editBio" rows="3" placeholder="Write a short bio..." style="width:100%;background:#1e1e24;border:1px solid #333;color:#fff;border-radius:8px;padding:10px;margin-top:4px;font-family:inherit;resize:none;"></textarea>
+        <button type="button" onclick="saveProfile()" style="margin-top:12px;">Save Changes</button>
+        <p id="dpMsg" class="status"></p>
+      </div>
+    </div>
+    <label style="display:block;margin-top:12px;font-size:13px;">Current Vibe / Mood Aura: <strong id="currentMoodLabel" style="color:var(--aura-color);">🌊 Chill</strong></label>
+    <div class="mood-bar">
+      <button type="button" class="mood-btn" onclick="setMood('chill')">🌊 Chill</button>
+      <button type="button" class="mood-btn" onclick="setMood('hyped')">⚡ Hyped</button>
+      <button type="button" class="mood-btn" onclick="setMood('focused')">🎯 Focused</button>
+      <button type="button" class="mood-btn" onclick="setMood('nostalgic')">📼 Nostalgic</button>
+      <button type="button" class="mood-btn" onclick="setMood('night_owl')">🦉 Night Owl</button>
+    </div>
+      </div>
+
+      <!-- Stories Bar & Upload Story -->
+  <!-- Instagram-style Horizontal Stories Strip (DP + Story Merged) -->
+  <div id="storiesBar" class="stories" style="display:flex;gap:14px;overflow-x:auto;padding:10px 4px;margin-bottom:12px;"></div>
+  <input type="file" id="storyInput" accept="image/*" onchange="uploadStory()" style="display:none;" />
+  <p id="storyMsg" class="status" style="text-align:center;margin:0 0 8px 0;"></p>
+
+  <!-- Full-Screen Instagram Story Viewer Modal -->
+  <div id="storyViewer" onclick="closeStoryViewer()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.94);z-index:1000;flex-direction:column;align-items:center;justify-content:center;padding:16px;">
+    <div style="width:100%;max-width:400px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <img id="viewerAvatar" src="" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--aura-color);" />
+        <strong id="viewerUser" style="color:#fff;font-size:14px;"></strong>
+      </div>
+      <button type="button" onclick="closeStoryViewer()" style="width:auto;background:transparent;color:#fff;font-size:20px;padding:4px 8px;">✕</button>
+    </div>
+    <img id="viewerImg" src="" style="width:100%;max-width:400px;max-height:76vh;object-fit:contain;border-radius:14px;border:1px solid #2e2e36;" />
+  </div>
+  <!-- Instagram-Style Bottom Navigation Bar with Centered "+" (Post / Reel) -->
+  <div id="bottomNav" style="position:fixed;bottom:0;left:0;right:0;height:58px;background:rgba(15,15,20,0.96);backdrop-filter:blur(12px);border-top:1px solid #26262e;display:flex;align-items:center;justify-content:space-around;z-index:900;">
+    <button type="button" onclick="navHome()" style="width:auto;background:transparent;color:#fff;font-size:22px;padding:6px 18px;margin:0;" title="Home">🏠</button>
+    <button type="button" onclick="openCreatePicker()" style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#ec4899,#8b5cf6,#38bdf8);color:#fff;font-size:26px;font-weight:bold;display:flex;align-items:center;justify-content:center;padding:0;margin:0;box-shadow:0 0 16px rgba(139,92,246,0.6);" title="Create">+</button>
+    <button type="button" onclick="navProfile()" style="width:auto;background:transparent;color:#fff;font-size:22px;padding:6px 18px;margin:0;" title="Profile">👤</button>
+  </div>
+
+  <!-- Instagram-Style "+" Option Picker Sheet (Post vs Reel) -->
+  <div id="createPickerModal" onclick="closeCreatePicker()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:950;align-items:flex-end;justify-content:center;">
+    <div onclick="event.stopPropagation()" style="background:#16161a;border-top:1px solid #2e2e36;border-radius:20px 20px 0 0;padding:20px;width:100%;max-width:460px;">
+      <div style="width:40px;height:4px;background:#3f3f46;border-radius:4px;margin:0 auto 14px auto;"></div>
+      <div style="text-align:center;font-weight:700;font-size:15px;margin-bottom:14px;">Create</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <button type="button" onclick="openCreateComposer('post')" style="background:#1e1e26;border:1px solid #333;border-radius:14px;padding:16px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;margin:0;">
+          <span style="font-size:26px;">🖼️</span>
+          <strong style="font-size:14px;color:#fff;">Post</strong>
+          <span style="font-size:11px;color:#9ca3af;">Share a photo</span>
+        </button>
+        <button type="button" onclick="openCreateComposer('reel')" style="background:#1e1e26;border:1px solid #333;border-radius:14px;padding:16px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;margin:0;">
+          <span style="font-size:26px;">🎬</span>
+          <strong style="font-size:14px;color:#fff;">Reel</strong>
+          <span style="font-size:11px;color:#9ca3af;">Share a short video</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Post / Reel Composer Modal -->
+  <div id="createComposerModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:980;align-items:center;justify-content:center;padding:16px;">
+    <div style="background:#16161a;border:1px solid #2e2e36;border-radius:16px;padding:20px;width:100%;max-width:400px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <strong id="composerTitle" style="font-size:16px;">New Post</strong>
+        <button type="button" onclick="closeCreateComposer()" style="width:auto;background:transparent;color:#aaa;padding:4px 8px;font-size:18px;margin:0;">✕</button>
+      </div>
+      <label for="postInput" style="display:block;text-align:center;background:#1e1e24;border:1px dashed #3f3f46;border-radius:12px;padding:14px;cursor:pointer;color:#38bdf8;font-size:13px;font-weight:600;">
+        <span id="pickerLabel">+ Choose Photo</span>
+      </label>
+      <input type="file" id="postInput" accept="image/*" onchange="previewPostMedia(this)" style="display:none;" />
+      <div id="mediaPreviewBox" style="margin-top:10px;text-align:center;display:none;">
+        <img id="postImgPreview" style="max-height:220px;max-width:100%;border-radius:10px;display:none;" />
+        <video id="postVidPreview" controls style="max-height:220px;max-width:100%;border-radius:10px;display:none;"></video>
+      </div>
+      <input id="postCaption" placeholder="Write a caption..." style="margin-top:10px;" />
+      <button type="button" onclick="uploadPost()" style="margin-top:10px;">Share</button>
+      <p id="postMsg" class="status"></p>
+    </div>
+  </div>
+
+      <!-- Feed -->
+      <div id="feedList"></div>
+      <button style="background:#333;" onclick="logout()">Log Out</button>
+    </div>
+  </div>
+
+  <script>
+    const API = "https://momento-a7w2.onrender.com";
+    let currentUser = JSON.parse(localStorage.getItem("momento_user") || "null");
+
+    function toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function auth(endpoint) {
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const msg = document.getElementById("authMsg");
+      msg.textContent = "";
+
+      const res = await fetch(API + endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password })
+      });
+      const data = await res.json();
+      window.activeStories = data.stories || [];
+      if (!res.ok) { msg.style.color = "#ff5252"; msg.textContent = data.error || "Failed"; return; }
+      currentUser = data;
+      localStorage.setItem("momento_user", JSON.stringify(currentUser));
+      initApp();
+    }
+
+  function openEditModal() {
+    if (!currentUser) return;
+    document.getElementById("editUsername").value = currentUser.username || "";
+    document.getElementById("editBio").value = currentUser.bio || "";
+    document.getElementById("editPreview").src = currentUser.profile_pic || "https://placeholder.com";
+    document.getElementById("dpInput").value = "";
+    document.getElementById("dpMsg").textContent = "";
+    document.getElementById("editModal").style.display = "flex";
+  }
+
+  function closeEditModal() {
+    document.getElementById("editModal").style.display = "none";
+  }
+
+  function previewEditDp(input) {
+    if (input.files && input.files[0]) {
+      document.getElementById("editPreview").src = URL.createObjectURL(input.files[0]);
+    }
+  }
+
+  async function saveProfile() {
+    const msg = document.getElementById("dpMsg");
+    const file = document.getElementById("dpInput").files[0];
+    const newUsername = document.getElementById("editUsername").value.trim();
+    const newBio = document.getElementById("editBio").value.trim();
+
+    let b64 = null;
+    if (file) {
+      b64 = await toBase64(file);
+      currentUser.profile_pic = b64;
+    }
+    if (newUsername) currentUser.username = newUsername;
+    currentUser.bio = newBio;
+
+    localStorage.setItem("momento_user", JSON.stringify(currentUser));
+    initApp();
+    msg.style.color = "#4ade80";
+    msg.textContent = "Saved!";
+    setTimeout(closeEditModal, 250);
+
+    const payload = { email: currentUser.email, username: currentUser.username, bio: newBio };
+    if (b64) payload.profile_pic = b64;
+
+    fetch(API + "/api/update-dp/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).then(r => r.ok ? r.json() : null).then(data => {
+      if (data && data.profile_pic) {
+        currentUser.profile_pic = data.profile_pic;
+        localStorage.setItem("momento_user", JSON.stringify(currentUser));
+        initApp();
+      }
+    }).catch(() => {});
+  }
+
+  function compressImage(file, maxW = 900) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const scale = Math.min(1, maxW / img.width);
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL("image/jpeg", 0.78));
+      };
+      img.src = URL.createObjectURL(file);
+    });
+  }
+
+  async function uploadStory() {
+    const input = document.getElementById("storyInput");
+    const file = input.files && input.files[0] ? input.files[0] : null;
+    if (!file) return;
+
+    const localStoryUrl = URL.createObjectURL(file);
+    window.activeStories = [
+      { username: currentUser.username, image_url: localStoryUrl, author_dp: currentUser.profile_pic },
+      ...(window.activeStories || [])
+    ];
+
+    const myDpEl = document.getElementById("userDp");
+    if (myDpEl) {
+      myDpEl.style.outline = "3px solid #f59e0b";
+      myDpEl.style.outlineOffset = "2px";
+    }
+
+    const sMsg = document.getElementById("storyMsg");
+    if (sMsg) {
+      sMsg.style.color = "#4ade80";
+      sMsg.textContent = "Story live! Tap your DP to view.";
+      setTimeout(() => { sMsg.textContent = ""; }, 2000);
+    }
+
+    input.value = "";
+    const smallB64 = await compressImage(file, 900);
+    fetch(API + "/api/stories/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: currentUser.email, image: smallB64 })
+    }).catch(() => {});
+  }
+      function viewStory(imgUrl, username, avatarUrl) {
+    document.getElementById("viewerImg").src = imgUrl;
+    document.getElementById("viewerUser").textContent = username;
+    document.getElementById("viewerAvatar").src = avatarUrl || imgUrl;
+    document.getElementById("storyViewer").style.display = "flex";
+  }
+
+  function closeStoryViewer() {
+    document.getElementById("storyViewer").style.display = "none";
+  }
+
+  function openMyStory() {
+    const mine = (window.activeStories || []).filter(s => currentUser && s.username === currentUser.username);
+    if (mine.length > 0) {
+      viewStory(mine[0].image_url, currentUser.username, currentUser.profile_pic);
+    } else {
+      document.getElementById("storyInput").click();
+    }
+  }
+  async function loadFeed() {
+      const res = await fetch(API + "/api/feed/");
+      const data = await res.json();
+      window.activeStories = data.stories || [];
+      const storiesBar = document.getElementById("storiesBar");
+    storiesBar.innerHTML = (data.stories || []).map(s => `
+      <div class="story-item"><img src="${s.image_url}" /><div style="font-size:11px;">${s.username}</div></div>
+    `).join("") || "<span style='color:#777;font-size:13px;'>No active stories yet</span>";
+
+    const feedList = document.getElementById("feedList");
+    feedList.innerHTML = (data.posts || []).map(p => `
+      <div class="card">
+        <div class="row">
+          <img class="avatar" style="width:36px;height:36px;" src="${p.author_dp || 'https://placeholder.com'}" />
+          <strong>${p.username}</strong>
+        </div>
+        <img class="post-img" src="${p.image_url}" />
+        <p>${p.caption || ""}</p>
+      </div>
+    `).join("");
+    }
+
+      let currentCreateType = "post";
+
+  function navHome() {
+    const feed = document.getElementById("feedList");
+    if (feed) feed.scrollIntoView({ behavior: "smooth" });
+  }
+
+  function navProfile() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function openCreatePicker() {
+    document.getElementById("createPickerModal").style.display = "flex";
+  }
+
+  function closeCreatePicker() {
+    document.getElementById("createPickerModal").style.display = "none";
+  }
+
+  function openCreateComposer(type) {
+    currentCreateType = type;
+    closeCreatePicker();
+    const input = document.getElementById("postInput");
+    input.value = "";
+    document.getElementById("postCaption").value = "";
+    document.getElementById("postMsg").textContent = "";
+    document.getElementById("mediaPreviewBox").style.display = "none";
+    document.getElementById("postImgPreview").style.display = "none";
+    document.getElementById("postVidPreview").style.display = "none";
+
+    if (type === "reel") {
+      document.getElementById("composerTitle").textContent = "New Reel";
+      document.getElementById("pickerLabel").textContent = "+ Choose Video (MP4 / WebM)";
+      input.accept = "video/*";
+    } else {
+      document.getElementById("composerTitle").textContent = "New Post";
+      document.getElementById("pickerLabel").textContent = "+ Choose Photo";
+      input.accept = "image/*";
+    }
+    document.getElementById("createComposerModal").style.display = "flex";
+  }
+
+  function closeCreateComposer() {
+    document.getElementById("createComposerModal").style.display = "none";
+  }
+
+  function previewPostMedia(input) {
+    const f = input.files && input.files.length ? input.files.item(0) : null;
+    if (!f) return;
+    const url = URL.createObjectURL(f);
+    document.getElementById("mediaPreviewBox").style.display = "block";
+    if (currentCreateType === "reel") {
+      const v = document.getElementById("postVidPreview");
+      v.src = url;
+      v.style.display = "block";
+      document.getElementById("postImgPreview").style.display = "none";
+    } else {
+      const img = document.getElementById("postImgPreview");
+      img.src = url;
+      img.style.display = "block";
+      document.getElementById("postVidPreview").style.display = "none";
+    }
+  }
+
+  async function uploadPost() {
+    const input = document.getElementById("postInput");
+    const file = input.files && input.files.length ? input.files.item(0) : null;
+    if (!file) return;
+    const caption = document.getElementById("postCaption").value.trim();
+    const localUrl = URL.createObjectURL(file);
+    const feedList = document.getElementById("feedList");
+
+    const mediaHtml = currentCreateType === "reel"
+      ? `<video src="${localUrl}" controls playsinline loop style="width:100%;border-radius:10px;margin-top:10px;max-height:420px;background:#000;"></video>`
+      : `<img class="post-img" src="${localUrl}" />`;
+
+    const badge = currentCreateType === "reel"
+      ? `<span style="margin-left:auto;font-size:11px;background:#8b5cf6;color:#fff;padding:2px 8px;border-radius:99px;">🎬 Reel</span>`
+      : ``;
+
+    const cardHtml = renderPostCard({
+      id: "local_" + Date.now(),
+      username: currentUser.username,
+      author_dp: currentUser.profile_pic,
+      image_url: localUrl,
+      caption: caption,
+      isReel: currentCreateType === "reel",
+      likes: 0,
+      comments: []
+    });
+    if (feedList) feedList.insertAdjacentHTML("afterbegin", cardHtml);
+
+    const msg = document.getElementById("postMsg");
+    msg.style.color = "#4ade80";
+    msg.textContent = currentCreateType === "reel" ? "Reel shared!" : "Post shared!";
+    setTimeout(closeCreateComposer, 250);
+    navHome();
+
+    if (currentCreateType === "post") {
+      const smallB64 = await compressImage(file, 900);
+      fetch(API + "/api/posts/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: currentUser.email, image: smallB64, caption })
+      }).catch(() => {});
+    }
+  }
+    function renderPostCard(post) {
+    const pid = post.id;
+    const badge = post.isReel
+      ? `<span style="margin-left:auto;font-size:11px;background:#8b5cf6;color:#fff;padding:2px 8px;border-radius:99px;">🎬 Reel</span>`
+      : ``;
+    const mediaTag = post.isReel
+      ? `<video src="${post.image_url}" controls playsinline loop style="width:100%;border-radius:10px;margin-top:10px;max-height:420px;background:#000;"></video>`
+      : `<img class="post-img" src="${post.image_url}" />`;
+
+    const existingComments = (post.comments || []).map(c =>
+      `<div style="font-size:13px;margin-top:4px;"><strong>${c.username || "user"}</strong> <span style="color:#d1d5db;">${c.text}</span></div>`
+    ).join("");
+
+    return `
+      <div class="card" id="card_${pid}">
+        <div class="row">
+          <img class="avatar" style="width:36px;height:36px;" src="${post.author_dp || 'https://placeholder.com'}" />
+          <strong>${post.username}</strong>
+          ${badge}
+        </div>
+        <div style="position:relative;user-select:none;" ondblclick="doubleTapLike('${pid}')">
+          ${mediaTag}
+          <div id="heart_${pid}"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;margin-top:10px;">
+          <button type="button" id="likeBtn_${pid}" onclick="toggleLike('${pid}')" data-liked="0" style="width:auto;background:transparent;padding:4px 6px;margin:0;font-size:20px;">🤍</button>
+          <button type="button" onclick="toggleComments('${pid}')" style="width:auto;background:transparent;padding:4px 6px;margin:0;font-size:19px;">💬</button>
+        </div>
+        <div style="font-size:13px;font-weight:600;margin-top:4px;"><span id="likeCount_${pid}">${post.likes || 0}</span> likes</div>
+        ${post.caption ? `<p style="margin:6px 0;"><strong>${post.username}</strong> ${post.caption}</p>` : ""}
+        <div id="commentsBox_${pid}" style="margin-top:8px;border-top:1px solid #26262e;padding-top:8px;">
+          <div id="commentsList_${pid}">${existingComments}</div>
+          <div style="display:flex;gap:8px;margin-top:8px;">
+            <input id="commentInput_${pid}" placeholder="Add a comment..." onkeydown="if(event.key==='Enter')addComment('${pid}')" style="margin:0;padding:8px 10px;font-size:13px;" />
+            <button type="button" onclick="addComment('${pid}')" style="width:auto;margin:0;padding:8px 14px;font-size:13px;background:#0095f6;">Post</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function toggleLike(pid, forceLike = false) {
+    const btn = document.getElementById("likeBtn_" + pid);
+    const cnt = document.getElementById("likeCount_" + pid);
+    if (!btn || !cnt) return;
+    const isLiked = btn.getAttribute("data-liked") === "1";
+    let num = parseInt(cnt.textContent || "0", 10);
+
+    if (!isLiked) {
+      btn.setAttribute("data-liked", "1");
+      btn.textContent = "❤️";
+      cnt.textContent = num + 1;
+    } else if (!forceLike) {
+      btn.setAttribute("data-liked", "0");
+      btn.textContent = "🤍";
+      cnt.textContent = Math.max(0, num - 1);
+    }
+  }
+
+  function doubleTapLike(pid) {
+    toggleLike(pid, true);
+    const holder = document.getElementById("heart_" + pid);
+    if (!holder) return;
+    holder.innerHTML = `<div class="heart-burst">❤️</div>`;
+    setTimeout(() => { holder.innerHTML = ""; }, 780);
+  }
+
+  function toggleComments(pid) {
+    const inp = document.getElementById("commentInput_" + pid);
+    if (inp) inp.focus();
+  }
+
+  function addComment(pid) {
+    const inp = document.getElementById("commentInput_" + pid);
+    const list = document.getElementById("commentsList_" + pid);
+    if (!inp || !list) return;
+    const text = inp.value.trim();
+    if (!text) return;
+    const who = (currentUser && currentUser.username) ? currentUser.username : "you";
+    list.insertAdjacentHTML("beforeend", `<div style="font-size:13px;margin-top:4px;"><strong>${who}</strong> <span style="color:#d1d5db;">${text}</span></div>`);
+    inp.value = "";
+  }
+  function logout() {
+      localStorage.removeItem("momento_user");
+      location.reload();
+    }
+
+    function initApp() {
+      if (!currentUser) return;
+      document.getElementById("authBox").classList.add("hidden");
+      document.getElementById("appBox").classList.remove("hidden");
+      document.getElementById("displayUser").textContent = currentUser.username;
+      document.getElementById("displayEmail").textContent = currentUser.email; document.getElementById("displayBio").textContent = currentUser.bio || "";
+      if (currentUser.profile_pic) document.getElementById("userDp").src = currentUser.profile_pic;
+      loadFeed();
+    }
+
+      const MOOD_MAP = {
+    chill: { label: "🌊 Chill", color: "#38bdf8" },
+    hyped: { label: "⚡ Hyped", color: "#facc15" },
+    focused: { label: "🎯 Focused", color: "#a855f7" },
+    nostalgic: { label: "📼 Nostalgic", color: "#fb7185" },
+    night_owl: { label: "🦉 Night Owl", color: "#34d399" }
+  };
+
+  function applyMoodUI(moodKey) {
+    const m = MOOD_MAP[moodKey] || MOOD_MAP.chill;
+    document.documentElement.style.setProperty("--aura-color", m.color);
+    const lbl = document.getElementById("currentMoodLabel");
+    if (lbl) lbl.textContent = m.label;
+  }
+
+  async function setMood(moodKey) {
+    applyMoodUI(moodKey);
+    if (!currentUser) return;
+    currentUser.mood = moodKey;
+    localStorage.setItem("momento_user", JSON.stringify(currentUser));
+    try {
+      await fetch(API + "/api/update-mood/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: currentUser.email, mood: moodKey })
+      });
+    } catch (e) { console.error("Mood sync failed", e); }
+  }
+
+  const _origInitApp = initApp;
+  initApp = function() {
+    _origInitApp();
+    if (currentUser) applyMoodUI(currentUser.mood || "chill");
+  };
+
+  initApp();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
