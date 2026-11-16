@@ -264,20 +264,27 @@
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
       const msg = document.getElementById("authMsg");
-      msg.textContent = "";
-
+    msg.style.color = "#60a5fa";
+    msg.textContent = "Connecting to server (may take ~40s if sleeping)...";
+    try {
       const res = await fetch(API + endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password })
       });
-      const data = await res.json();
+      const text = await res.text();
+      let data = {};
+      try { data = JSON.parse(text); } catch (e) { throw new Error("Server returned HTTP " + res.status + " (not JSON)"); }
       window.activeStories = data.stories || [];
-      if (!res.ok) { msg.style.color = "#ff5252"; msg.textContent = data.error || "Failed"; return; }
+      if (!res.ok) { msg.style.color = "#ff5252"; msg.textContent = data.error || ("Error " + res.status); return; }
       currentUser = data;
       localStorage.setItem("momento_user", JSON.stringify(currentUser));
       initApp();
+    } catch (err) {
+      msg.style.color = "#ff5252";
+      msg.textContent = "Error: " + err.message;
     }
+  }
 
   function openEditModal() {
     if (!currentUser) return;
