@@ -512,7 +512,7 @@
         </div>
         <div style="display:flex;align-items:center;gap:14px;margin-top:10px;">
           <button type="button" id="likeBtn_${pid}" onclick="toggleLike('${pid}')" data-liked="0" style="width:auto;background:transparent;padding:4px 6px;margin:0;font-size:20px;">🏠</button>
-          <button type="button" onclick="toggleComments('${pid}')" style="width:auto;background:transparent;padding:4px 6px;margin:0;font-size:19px;">🏠</button>
+          <button type="button" onclick="toggleComments('${pid}')" style="width:auto;background:transparent;padding:4px 6px;margin:0;font-size:19px;">👤</button>
         </div>
         <div style="font-size:13px;font-weight:600;margin-top:4px;"><span id="likeCount_${pid}">${post.likes || 0}</span> likes</div>
         ${post.caption ? `<p style="margin:6px 0;"><strong>${post.username}</strong> ${post.caption}</p>` : ""}
