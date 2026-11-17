@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -155,7 +155,7 @@
       <div style="background:#16161a;border:1px solid #2e2e36;border-radius:16px;padding:20px;width:100%;max-width:380px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
           <strong style="font-size:16px;">Edit Profile</strong>
-          <button type="button" onclick="closeEditModal()" style="width:auto;background:transparent;color:#aaa;padding:4px 8px;font-size:18px;">Ã—</button>
+          <button type="button" onclick="closeEditModal()" style="width:auto;background:transparent;color:#aaa;padding:4px 8px;font-size:18px;">×</button>
         </div>
         <div style="text-align:center;margin-bottom:14px;">
           <img id="editPreview" src="" style="width:76px;height:76px;border-radius:50%;object-fit:cover;border:2px solid var(--aura-color);" />
@@ -172,13 +172,13 @@
         <p id="dpMsg" class="status"></p>
       </div>
     </div>
-    <label style="display:block;margin-top:12px;font-size:13px;">Current Vibe / Mood Aura: <strong id="currentMoodLabel" style="color:var(--aura-color);">ðŸŒŠ Chill</strong></label>
+    <label style="display:block;margin-top:12px;font-size:13px;">Current Vibe / Mood Aura: <strong id="currentMoodLabel" style="color:var(--aura-color);">🌊 Chill</strong></label>
     <div class="mood-bar">
-      <button type="button" class="mood-btn" onclick="setMood('chill')">ðŸŒŠ Chill</button>
-      <button type="button" class="mood-btn" onclick="setMood('hyped')">ðŸ”¥ Hyped</button>
-      <button type="button" class="mood-btn" onclick="setMood('focused')">ðŸŽ¯ Focused</button>
-      <button type="button" class="mood-btn" onclick="setMood('nostalgic')">ðŸ“¼ Nostalgic</button>
-      <button type="button" class="mood-btn" onclick="setMood('night_owl')">ðŸ¦‰ Night Owl</button>
+      <button type="button" class="mood-btn" onclick="setMood('chill')">🌊 Chill</button>
+      <button type="button" class="mood-btn" onclick="setMood('hyped')">🔥 Hyped</button>
+      <button type="button" class="mood-btn" onclick="setMood('focused')">🎯 Focused</button>
+      <button type="button" class="mood-btn" onclick="setMood('nostalgic')">📼 Nostalgic</button>
+      <button type="button" class="mood-btn" onclick="setMood('night_owl')">🦉 Night Owl</button>
     </div>
       </div>
 
@@ -195,15 +195,15 @@
         <img id="viewerAvatar" src="" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--aura-color);" />
         <strong id="viewerUser" style="color:#fff;font-size:14px;"></strong>
       </div>
-      <button type="button" onclick="closeStoryViewer()" style="width:auto;background:transparent;color:#fff;font-size:20px;padding:4px 8px;">ðŸ‘¤</button>
+      <button type="button" onclick="closeStoryViewer()" style="width:auto;background:transparent;color:#fff;font-size:20px;padding:4px 8px;">👤</button>
     </div>
     <img id="viewerImg" src="" style="width:100%;max-width:400px;max-height:76vh;object-fit:contain;border-radius:14px;border:1px solid #2e2e36;" />
   </div>
   <!-- Instagram-Style Bottom Navigation Bar with Centered "+" (Post / Reel) -->
   <div id="bottomNav" style="position:fixed;bottom:0;left:0;right:0;height:58px;background:rgba(15,15,20,0.96);backdrop-filter:blur(12px);border-top:1px solid #26262e;display:flex;align-items:center;justify-content:space-around;z-index:900;">
-    <button type="button" onclick="navHome()" style="width:auto;background:transparent;color:#fff;font-size:22px;padding:6px 18px;margin:0;" title="Home">ðŸ </button>
+    <button type="button" onclick="navHome()" style="width:auto;background:transparent;color:#fff;font-size:22px;padding:6px 18px;margin:0;" title="Home">🏠</button>
     <button type="button" onclick="openCreatePicker()" style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#ec4899,#8b5cf6,#38bdf8);color:#fff;font-size:26px;font-weight:bold;display:flex;align-items:center;justify-content:center;padding:0;margin:0;box-shadow:0 0 16px rgba(139,92,246,0.6);" title="Create">+</button>
-    <button type="button" onclick="navProfile()" style="width:auto;background:transparent;color:#fff;font-size:22px;padding:6px 18px;margin:0;" title="Profile">ðŸ‘¤</button>
+    <button type="button" onclick="navProfile()" style="width:auto;background:transparent;color:#fff;font-size:22px;padding:6px 18px;margin:0;" title="Profile">👤</button>
   </div>
 
   <!-- Instagram-Style "+" Option Picker Sheet (Post vs Reel) -->
@@ -213,12 +213,12 @@
       <div style="text-align:center;font-weight:700;font-size:15px;margin-bottom:14px;">Create</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <button type="button" onclick="openCreateComposer('post')" style="background:#1e1e26;border:1px solid #333;border-radius:14px;padding:16px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;margin:0;">
-          <span style="font-size:26px;">ðŸ–¼ï¸</span>
+          <span style="font-size:26px;">🖼️</span>
           <strong style="font-size:14px;color:#fff;">Post</strong>
           <span style="font-size:11px;color:#9ca3af;">Share a photo</span>
         </button>
         <button type="button" onclick="openCreateComposer('reel')" style="background:#1e1e26;border:1px solid #333;border-radius:14px;padding:16px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;margin:0;">
-          <span style="font-size:26px;">ðŸŽ¬</span>
+          <span style="font-size:26px;">🎬</span>
           <strong style="font-size:14px;color:#fff;">Reel</strong>
           <span style="font-size:11px;color:#9ca3af;">Share a short video</span>
         </button>
@@ -231,7 +231,7 @@
     <div style="background:#16161a;border:1px solid #2e2e36;border-radius:16px;padding:20px;width:100%;max-width:400px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
         <strong id="composerTitle" style="font-size:16px;">New Post</strong>
-        <button type="button" onclick="closeCreateComposer()" style="width:auto;background:transparent;color:#aaa;padding:4px 8px;font-size:18px;margin:0;">Ã—</button>
+        <button type="button" onclick="closeCreateComposer()" style="width:auto;background:transparent;color:#aaa;padding:4px 8px;font-size:18px;margin:0;">×</button>
       </div>
       <label for="postInput" style="display:block;text-align:center;background:#1e1e24;border:1px dashed #3f3f46;border-radius:12px;padding:14px;cursor:pointer;color:#38bdf8;font-size:13px;font-weight:600;">
         <span id="pickerLabel">+ Choose Photo</span>
@@ -521,7 +521,7 @@
       : `<img class="post-img" src="${localUrl}" />`;
 
     const badge = currentCreateType === "reel"
-      ? `<span style="margin-left:auto;font-size:11px;background:#8b5cf6;color:#fff;padding:2px 8px;border-radius:99px;">Ã°Å¸Å½Â¬ Reel</span>`
+      ? `<span style="margin-left:auto;font-size:11px;background:#8b5cf6;color:#fff;padding:2px 8px;border-radius:99px;">ðŸŽ¬ Reel</span>`
       : ``;
 
     const cardHtml = renderPostCard({
@@ -554,7 +554,7 @@
     function renderPostCard(post) {
     const pid = post.id;
     const badge = post.isReel
-      ? `<span style="margin-left:auto;font-size:11px;background:#8b5cf6;color:#fff;padding:2px 8px;border-radius:99px;">Ã°Å¸Å½Â¬ Reel</span>`
+      ? `<span style="margin-left:auto;font-size:11px;background:#8b5cf6;color:#fff;padding:2px 8px;border-radius:99px;">ðŸŽ¬ Reel</span>`
       : ``;
     const mediaTag = post.isReel
       ? `<video src="${post.image_url}" controls playsinline loop style="width:100%;border-radius:10px;margin-top:10px;max-height:420px;background:#000;"></video>`
@@ -576,8 +576,8 @@
           <div id="heart_${pid}"></div>
         </div>
         <div style="display:flex;align-items:center;gap:14px;margin-top:10px;">
-          <button type="button" id="likeBtn_${pid}" onclick="toggleLike('${pid}')" data-liked="0" style="width:auto;background:transparent;padding:4px 6px;margin:0;font-size:20px;">ðŸ¤</button>
-          <button type="button" onclick="toggleComments('${pid}')" style="width:auto;background:transparent;padding:4px 6px;margin:0;font-size:19px;">ðŸ’¬</button>
+          <button type="button" id="likeBtn_${pid}" onclick="toggleLike('${pid}')" data-liked="0" style="width:auto;background:transparent;padding:4px 6px;margin:0;font-size:20px;">🤍</button>
+          <button type="button" onclick="toggleComments('${pid}')" style="width:auto;background:transparent;padding:4px 6px;margin:0;font-size:19px;">💬</button>
         </div>
         <div style="font-size:13px;font-weight:600;margin-top:4px;"><span id="likeCount_${pid}">${post.likes || 0}</span> likes</div>
         ${post.caption ? `<p style="margin:6px 0;"><strong>${post.username}</strong> ${post.caption}</p>` : ""}
@@ -601,11 +601,11 @@
 
     if (!isLiked) {
       btn.setAttribute("data-liked", "1");
-      btn.textContent = "Ã¢ÂÂ¤Ã¯Â¸Â";
+      btn.textContent = "â¤ï¸";
       cnt.textContent = num + 1;
     } else if (!forceLike) {
       btn.setAttribute("data-liked", "0");
-      btn.textContent = "Ã°Å¸Â¤Â";
+      btn.textContent = "ðŸ¤";
       cnt.textContent = Math.max(0, num - 1);
     }
   }
@@ -614,7 +614,7 @@
     toggleLike(pid, true);
     const holder = document.getElementById("heart_" + pid);
     if (!holder) return;
-    holder.innerHTML = `<div class="heart-burst">Ã¢ÂÂ¤Ã¯Â¸Â</div>`;
+    holder.innerHTML = `<div class="heart-burst">â¤ï¸</div>`;
     setTimeout(() => { holder.innerHTML = ""; }, 780);
   }
 
@@ -649,11 +649,11 @@
     }
 
       const MOOD_MAP = {
-    chill: { label: "ðŸŒŠ Chill", color: "#38bdf8" },
-    hyped: { label: "ðŸ”¥ Hyped", color: "#facc15" },
-    focused: { label: "ðŸŽ¯ Focused", color: "#a855f7" },
-    nostalgic: { label: "ðŸ“¼ Nostalgic", color: "#fb7185" },
-    night_owl: { label: "ðŸ¦‰ Night Owl", color: "#34d399" }
+    chill: { label: "🌊 Chill", color: "#38bdf8" },
+    hyped: { label: "🔥 Hyped", color: "#facc15" },
+    focused: { label: "🎯 Focused", color: "#a855f7" },
+    nostalgic: { label: "📼 Nostalgic", color: "#fb7185" },
+    night_owl: { label: "🦉 Night Owl", color: "#34d399" }
   };
 
   function applyMoodUI(moodKey) {
@@ -697,7 +697,7 @@ function renderLinkedFriendUI(lf) {
     badge.style.display = "inline-block";
     if (status) {
       const daysLeft = Math.max(1, Math.ceil((new Date(lf.expires_at) - new Date()) / 86400000));
-      const streakTxt = lf.duo_streak ? " • 🔥 " + lf.duo_streak + "d streak" : " • 🔥 0d streak"; status.textContent = "@" + (lf.username || lf.email) + " (" + daysLeft + "d left)" + streakTxt;
+      const streakTxt = lf.duo_streak ? " \u2022 \uD83D\uDD25 " + lf.duo_streak + "d streak" : " \u2022 \uD83D\uDD25 0d streak"; status.textContent = "@" + (lf.username || lf.email) + " (" + daysLeft + "d left)" + streakTxt;
     }
     if (unlinkBtn) unlinkBtn.style.display = "inline-block";
   } else {
@@ -972,7 +972,6 @@ initApp = function() {
 </script>
 </body>
 </html>
-
 
 
 
