@@ -687,28 +687,34 @@
   initApp();
   
 function renderLinkedFriendUI(lf) {
-  const badge = document.getElementById("friendDpBadge");
-  const status = document.getElementById("friendLinkStatus");
-  const unlinkBtn = document.getElementById("unlinkFriendBtn");
-  if (!badge) return;
-  if (lf) {
-    const dpSrc = lf.dp ? (lf.dp.startsWith("http") ? lf.dp : (API + lf.dp)) : "";
-    const initial = (lf.username || lf.email || "?").charAt(0).toUpperCase(); const fallbackSvg = "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://w3.org" width="64" height="64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient></defs><rect width="64" height="64" rx="32" fill="url(#g)"/><text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-weight="bold" font-size="28">' + initial + '</text></svg>'); badge.onerror = () => { badge.onerror = null; badge.src = fallbackSvg; }; badge.src = dpSrc || fallbackSvg;
-    badge.title = "Linked with " + (lf.username || lf.email);
-    badge.style.display = "inline-block";
-    if (status) {
-      const daysLeft = Math.max(1, Math.ceil((new Date(lf.expires_at) - new Date()) / 86400000));
-      const streakTxt = lf.duo_streak ? " \u2022 \uD83D\uDD25 " + lf.duo_streak + "d streak" : " \u2022 \uD83D\uDD25 0d streak"; status.textContent = "@" + (lf.username || lf.email) + " (" + daysLeft + "d left)" + streakTxt;
+    const badge = document.getElementById("friendDpBadge");
+    const status = document.getElementById("friendLinkStatus");
+    const unlinkBtn = document.getElementById("unlinkFriendBtn");
+    if (!badge) return;
+    if (lf) {
+      const initial = (lf.username || lf.email || "?").charAt(0).toUpperCase();
+      const svg = `<svg xmlns="http://w3.org" width="64" height="64"><rect width="64" height="64" rx="32" fill="#4f46e5"/><text x="32" y="42" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-weight="bold" font-size="28">${initial}</text></svg>`;
+      const fallbackSvg = "data:image/svg+xml;base64," + btoa(svg);
+      const isDefault = !lf.dp || lf.dp.includes("default.jpg");
+      const dpSrc = isDefault ? fallbackSvg : (lf.dp.startsWith("http") ? lf.dp : (API + lf.dp));
+      badge.onerror = () => { badge.onerror = null; badge.src = fallbackSvg; };
+      badge.src = dpSrc;
+      badge.style.display = "inline-block";
+      if (status && lf.expires_at) {
+        const msLeft = new Date(lf.expires_at).getTime() - Date.now();
+        const daysLeft = Math.max(1, Math.ceil(msLeft / (1000 * 60 * 60 * 24)));
+        const streakTxt = " \u2022 \uD83D\uDD25 " + (lf.duo_streak || 0) + "d streak";
+        status.textContent = "@" + (lf.username || lf.email) + " (" + daysLeft + "d left)" + streakTxt;
+      }
+      if (unlinkBtn) unlinkBtn.style.display = "inline-block";
+    } else {
+      badge.style.display = "none";
+      if (status) status.textContent = "";
+      if (unlinkBtn) unlinkBtn.style.display = "none";
     }
-    if (unlinkBtn) unlinkBtn.style.display = "inline-block";
-  } else {
-    badge.style.display = "none";
-    if (status) status.textContent = "";
-    if (unlinkBtn) unlinkBtn.style.display = "none";
   }
-}
 
-async function syncLinkedFriend() {
+  async function syncLinkedFriend() {
   if (!currentUser || !currentUser.email) return;
   if (currentUser.linked_friend) renderLinkedFriendUI(currentUser.linked_friend);
   try {
