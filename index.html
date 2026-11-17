@@ -692,7 +692,7 @@ function renderLinkedFriendUI(lf) {
   if (!badge) return;
   if (lf) {
     const dpSrc = lf.dp ? (lf.dp.startsWith("http") ? lf.dp : (API + lf.dp)) : "";
-    const fallbackSvg = "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://w3.org" width="64" height="64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient></defs><rect width="64" height="64" rx="32" fill="url(#g)"/><text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-weight="bold" font-size="28">' + ((lf.username || lf.email || "?")[0].toUpperCase()) + '</text></svg>'); badge.onerror = () => { badge.onerror = null; badge.src = fallbackSvg; }; badge.src = dpSrc;
+    const initial = (lf.username || lf.email || "?").charAt(0).toUpperCase(); const fallbackSvg = "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://w3.org" width="64" height="64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient></defs><rect width="64" height="64" rx="32" fill="url(#g)"/><text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-weight="bold" font-size="28">' + initial + '</text></svg>'); badge.onerror = () => { badge.onerror = null; badge.src = fallbackSvg; }; badge.src = dpSrc || fallbackSvg;
     badge.title = "Linked with " + (lf.username || lf.email);
     badge.style.display = "inline-block";
     if (status) {
