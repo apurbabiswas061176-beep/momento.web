@@ -1136,7 +1136,7 @@ function switchProfileContentTab(tab) {
   const grid = document.getElementById('profilePhotoGrid');
   if (!grid) return;
   if (tab === 'tagged') {
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#9ca3af;font-size:13px;padding:24px 0;">No tagged posts yet.</div>';
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#9ca3af;font-size:13px;padding:24px 0;">No tagged posts yet.</div>'; } else if (tab === 'reels') { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#9ca3af;font-size:13px;padding:24px 0;">No reels uploaded yet. Tap &#127916; above to share one!</div>';
   } else if (typeof loadMyProfilePosts === 'function') {
     loadMyProfilePosts();
   }
