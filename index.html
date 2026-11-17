@@ -103,10 +103,18 @@
             <div style="font-size:12px;color:#60a5fa;font-weight:600;">Find People</div>
           </div>
         </div>
-        <button type="button" onclick="openEditModal()" style="margin-top:12px;background:#26262e;border:1px solid #3f3f46;color:#fff;font-weight:600;border-radius:8px;padding:8px;">Edit Profile</button>
+        <div style="display:flex;gap:8px;margin-top:8px;"><button type="button" style="flex:1;margin:0;padding:7px 10px;font-size:12px;" onclick="openEditModal()" style="margin-top:12px;background:#26262e;border:1px solid #3f3f46;color:#fff;font-weight:600;border-radius:8px;padding:8px;">Edit Profile</button>
         <input type="file" id="quickAvatarInput" accept="image/*" style="display:none;" onchange="handleQuickAvatarUpload(event)" />
-        <button type="button" onclick="document.getElementById('quickAvatarInput').click()" style="margin-top:8px;background:#1c1c22;border:1px solid #2e2e36;color:#60a5fa;font-weight:600;border-radius:8px;padding:7px;font-size:12px;">&#128444; Change Profile Photo</button>
-      <div id="friendLinkBox" style="margin-top:10px;background:#1c1c22;border:1px solid #2e2e36;border-radius:10px;padding:10px;">
+        <button type="button" onclick="document.getElementById('quickAvatarInput').click()" style="flex:1;margin:0;background:#1c1c22;border:1px solid #2e2e36;color:#60a5fa;font-weight:600;border-radius:8px;padding:7px 10px;font-size:12px;">Change Photo</button></div>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+  <button type="button" onclick="toggleProfileDrawer('friendLinkBox')" style="flex:1;margin:0;background:#18181f;border:1px solid #2a2a35;color:#cbd5e1;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;">
+    <span>Duo Link (Co-DP)</span><span style="color:#60a5fa;font-size:11px;">&#9662;</span>
+  </button>
+  <button type="button" onclick="toggleProfileDrawer('moodAuraBox')" style="flex:1;margin:0;background:#18181f;border:1px solid #2a2a35;color:#cbd5e1;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;">
+    <span>Mood Aura</span><span style="color:#60a5fa;font-size:11px;">&#9662;</span>
+  </button>
+</div>
+<div id="friendLinkBox" style="display:none;margin-top:8px;background:#1c1c22;border:1px solid #2e2e36;border-radius:10px;padding:10px;">
         <div style="font-size:12px;color:#a1a1aa;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;">
           <span>Duo Link (Co-DP)</span>
           <span id="friendLinkStatus" style="color:#00d2ff;font-weight:600;"></span>
@@ -196,7 +204,7 @@
       <button type="button" class="mood-btn" onclick="setMood('focused')">🎯 Focused</button>
       <button type="button" class="mood-btn" onclick="setMood('nostalgic')">📼 Nostalgic</button>
       <button type="button" class="mood-btn" onclick="setMood('night_owl')">🦉 Night Owl</button>
-    </div>
+    </div></div>
       </div>
 
       <!-- Stories Bar & Upload Story -->
@@ -1090,6 +1098,16 @@ async function toggleFollowUser(targetId, btn) {
   } finally { btn.disabled = false; }
 }
 document.addEventListener('DOMContentLoaded', () => { setTimeout(loadFollowCounts, 800); });
+function toggleProfileDrawer(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isOpen = el.style.display === 'block';
+  ['friendLinkBox', 'moodAuraBox'].forEach(boxId => {
+    const b = document.getElementById(boxId);
+    if (b) b.style.display = 'none';
+  });
+  el.style.display = isOpen ? 'none' : 'block';
+}
 </script>
 </body>
 </html>
