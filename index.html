@@ -522,7 +522,7 @@
       : `<img class="post-img" src="${localUrl}" />`;
 
     const badge = currentCreateType === "reel"
-      ? `<span style="margin-left:auto;font-size:11px;background:#8b5cf6;color:#fff;padding:2px 8px;border-radius:99px;">ðŸŽ¬ Reel</span>`
+      ? `<span style="margin-left:auto;font-size:11px;background:#8b5cf6;color:#fff;padding:2px 8px;border-radius:99px;">🎬 Reel</span>`
       : ``;
 
     const cardHtml = renderPostCard({
@@ -555,7 +555,7 @@
     function renderPostCard(post) {
     const pid = post.id;
     const badge = post.isReel
-      ? `<span style="margin-left:auto;font-size:11px;background:#8b5cf6;color:#fff;padding:2px 8px;border-radius:99px;">ðŸŽ¬ Reel</span>`
+      ? `<span style="margin-left:auto;font-size:11px;background:#8b5cf6;color:#fff;padding:2px 8px;border-radius:99px;">🎬 Reel</span>`
       : ``;
     const mediaTag = post.isReel
       ? `<video src="${post.image_url}" controls playsinline loop style="width:100%;border-radius:10px;margin-top:10px;max-height:420px;background:#000;"></video>`
