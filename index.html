@@ -87,20 +87,18 @@
           <div id="displayLocation" onclick="detectUserLocation(true)" title="Click to refresh exact location" style="font-size:12px;color:#60a5fa;margin-top:4px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;"><span>&#128205;</span><span id="locationText">Detecting location...</span></div>
       </div>
     </div>
-            <div id="momentoFollowStats" style="display:flex;justify-content:space-around;align-items:center;background:#18181f;border:1px solid #2a2a35;border-radius:12px;padding:10px 8px;margin-top:12px;text-align:center;">
-          <div onclick="openFollowModal('followers')" style="cursor:pointer;flex:1;">
-            <div id="statFollowersCount" style="font-size:17px;font-weight:700;color:#fff;">0</div>
-            <div style="font-size:12px;color:#9ca3af;">Followers</div>
+            <div id="momentoFollowStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;text-align:center;">
+          <div onclick="openFollowModal('followers')" style="cursor:pointer;background:#16161d;border:1px solid #282834;border-radius:12px;padding:12px 8px;">
+            <div id="statFollowersCount" style="font-size:18px;font-weight:700;color:#fff;">0</div>
+            <div style="font-size:12px;color:#9ca3af;margin-top:2px;">Followers</div>
           </div>
-          <div style="width:1px;height:26px;background:#2a2a35;"></div>
-          <div onclick="openFollowModal('following')" style="cursor:pointer;flex:1;">
-            <div id="statFollowingCount" style="font-size:17px;font-weight:700;color:#fff;">0</div>
-            <div style="font-size:12px;color:#9ca3af;">Following</div>
+          <div onclick="openFollowModal('following')" style="cursor:pointer;background:#16161d;border:1px solid #282834;border-radius:12px;padding:12px 8px;">
+            <div id="statFollowingCount" style="font-size:18px;font-weight:700;color:#fff;">0</div>
+            <div style="font-size:12px;color:#9ca3af;margin-top:2px;">Following</div>
           </div>
-          <div style="width:1px;height:26px;background:#2a2a35;"></div>
-          <div onclick="openFollowModal('discover')" style="cursor:pointer;flex:1;">
-            <div style="font-size:17px;font-weight:700;color:#60a5fa;">+</div>
-            <div style="font-size:12px;color:#60a5fa;font-weight:600;">Find People</div>
+          <div onclick="openFollowModal('discover')" style="cursor:pointer;background:#16161d;border:1px solid #282834;border-radius:12px;padding:12px 8px;">
+            <div style="font-size:18px;font-weight:700;color:#60a5fa;">+</div>
+            <div style="font-size:12px;color:#60a5fa;font-weight:600;margin-top:2px;">Find People</div>
           </div>
         </div>
         <div style="display:flex;gap:8px;margin-top:8px;"><button type="button" style="flex:1;margin:0;padding:7px 10px;font-size:12px;" onclick="openEditModal()" style="margin-top:12px;background:#26262e;border:1px solid #3f3f46;color:#fff;font-weight:600;border-radius:8px;padding:8px;">Edit Profile</button>
@@ -131,7 +129,7 @@
         </div>
       </div>
 
-          <div id="memoriesSection" style="margin-top:12px;background:#1c1c22;border:1px solid #2e2e36;border-radius:10px;padding:10px;">
+          <div id="memoriesSection" style="flex:1;min-width:170px;margin:0;background:#1c1c22;border:1px solid #2e2e36;border-radius:12px;padding:12px;">
         <div style="font-size:12px;color:#a1a1aa;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">
           <span>Memories</span>
           <span id="memoryCount" style="color:#71717a;"></span>
@@ -145,7 +143,7 @@
         </div>
       </div>
 
-      <!-- Add Memory Modal -->
+      </div><!-- End Duo+Memories Side-by-Side Row --><!-- Add Memory Modal -->
       <div id="addMemoryModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:999;align-items:center;justify-content:center;padding:16px;">
         <div style="background:#16161a;border:1px solid #2e2e36;border-radius:16px;padding:18px;width:100%;max-width:360px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
@@ -233,7 +231,7 @@
 
   <!-- Instagram-Style "+" Option Picker Sheet (Post vs Reel) -->
   <div id="createPickerModal" onclick="closeCreatePicker()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:950;align-items:flex-end;justify-content:center;">
-    <div onclick="event.stopPropagation()" style="background:#16161a;border-top:1px solid #2e2e36;border-radius:20px 20px 0 0;padding:20px;width:100%;max-width:460px;">
+    <div onclick="event.stopPropagation()" style="background:#16161a;border-top:1px solid #2e2e36;border-radius:20px 20px 0 0;padding:20px;width:100%;max-width: 760px;">
       <div style="width:40px;height:4px;background:#3f3f46;border-radius:4px;margin:0 auto 14px auto;"></div>
       <div style="text-align:center;font-weight:700;font-size:15px;margin-bottom:14px;">Create</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
@@ -274,7 +272,20 @@
 
       <!-- Feed -->
       <div id="feedList"></div>
-      <div id="profileGridSection" style="margin-top:14px;background:#1c1c22;border:1px solid #2e2e36;border-radius:10px;padding:10px;">
+      <div id="profileContentTabs" style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+  <button type="button" id="pTabPosts" onclick="switchProfileContentTab('posts')" style="flex:1;min-width:95px;margin:0;background:linear-gradient(135deg,#172554,#1e3a8a);border:1px solid #3b82f6;color:#fff;border-radius:12px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;">&#9638; Posts</button>
+  <button type="button" id="pTabReels" onclick="switchProfileContentTab('reels')" style="flex:1;min-width:95px;margin:0;background:#16161d;border:1px solid #282834;color:#9ca3af;border-radius:12px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;">&#9654; Reels</button>
+  <button type="button" id="pTabTagged" onclick="switchProfileContentTab('tagged')" style="flex:1;min-width:95px;margin:0;background:#16161d;border:1px solid #282834;color:#9ca3af;border-radius:12px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;">&#128278; Tagged</button>
+</div>
+
+<div style="display:flex;align-items:center;gap:10px;margin-top:12px;background:#16161d;border:1px solid #282834;border-radius:14px;padding:8px 10px;">
+  <div onclick="openCreateComposer('post')" style="flex:1;background:#1c1c24;border:1px solid #2a2a36;border-radius:10px;padding:9px 14px;color:#9ca3af;font-size:13px;cursor:pointer;">What's on your mind?</div>
+  <button type="button" onclick="openCreateComposer('post')" title="Add Photo" style="width:auto;margin:0;background:#1e1e26;border:1px solid #2e2e3a;color:#cbd5e1;border-radius:9px;padding:8px 10px;font-size:14px;cursor:pointer;">&#128444;</button>
+  <button type="button" onclick="openCreateComposer('reel')" title="Add Reel" style="width:auto;margin:0;background:#1e1e26;border:1px solid #2e2e3a;color:#cbd5e1;border-radius:9px;padding:8px 10px;font-size:14px;cursor:pointer;">&#127916;</button>
+  <button type="button" onclick="openCreateComposer('post')" style="width:auto;margin:0;background:linear-gradient(135deg,#2563eb,#7c3aed);border:none;color:#fff;border-radius:10px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;">Post</button>
+</div>
+
+<div id="profileGridSection" style="margin-top:12px;background:#1c1c22;border:1px solid #2e2e36;border-radius:12px;padding:12px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12px;color:#a1a1aa;">
           <span>&#128248; My Posts Grid</span>
           <span id="profilePostCount" style="color:#60a5fa;font-weight:600;">0 posts</span>
@@ -1002,7 +1013,7 @@ initApp = function() {
 };
 </script>
 <div id="momentoFollowModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:9999;align-items:center;justify-content:center;padding:16px;">
-  <div style="background:#16161d;border:1px solid #2e2e3a;border-radius:16px;width:100%;max-width:420px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden;color:#fff;">
+  <div style="background:#16161d;border:1px solid #2e2e3a;border-radius:16px;width:100%;max-width: 760px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden;color:#fff;">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #262630;">
       <div style="display:flex;gap:8px;">
         <button type="button" id="tabBtnFollowers" onclick="switchFollowTab('followers')" style="background:#2563eb;color:#fff;border:none;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:600;cursor:pointer;">Followers</button>
@@ -1107,6 +1118,28 @@ function toggleProfileDrawer(id) {
     if (b) b.style.display = 'none';
   });
   el.style.display = isOpen ? 'none' : 'block';
+}
+function switchProfileContentTab(tab) {
+  ['posts', 'reels', 'tagged'].forEach(t => {
+    const btn = document.getElementById('pTab' + t.charAt(0).toUpperCase() + t.slice(1));
+    if (!btn) return;
+    if (t === tab) {
+      btn.style.background = 'linear-gradient(135deg,#172554,#1e3a8a)';
+      btn.style.border = '1px solid #3b82f6';
+      btn.style.color = '#fff';
+    } else {
+      btn.style.background = '#16161d';
+      btn.style.border = '1px solid #282834';
+      btn.style.color = '#9ca3af';
+    }
+  });
+  const grid = document.getElementById('profilePhotoGrid');
+  if (!grid) return;
+  if (tab === 'tagged') {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#9ca3af;font-size:13px;padding:24px 0;">No tagged posts yet.</div>';
+  } else if (typeof loadMyProfilePosts === 'function') {
+    loadMyProfilePosts();
+  }
 }
 </script>
 </body>
