@@ -51,6 +51,103 @@
     }
     body { background: #070b14 !important; }
     /* EXACT MOCKUP PROFILE STYLING */
+    /* LEFT NAVIGATION SIDEBAR (DESKTOP) */
+    @media (min-width: 820px) {
+      #appBox {
+        display: grid !important;
+        grid-template-columns: 245px minmax(0, 740px) !important;
+        justify-content: center !important;
+        gap: 24px !important;
+        max-width: 1120px !important;
+        margin: 0 auto !important;
+        padding: 16px 20px !important;
+      }
+      #bottomNav { display: none !important; }
+      #desktopLeftSidebar { display: flex !important; }
+    }
+    #desktopLeftSidebar {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(180deg, #0e1424 0%, #161233 100%);
+      border: 1px solid #1e263d;
+      border-radius: 18px;
+      padding: 18px 12px;
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+    }
+    .m-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 10px 18px;
+      font-size: 19px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .m-brand-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 17px;
+      box-shadow: 0 0 14px rgba(59,130,246,0.45);
+    }
+    .m-side-btn {
+      display: flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      width: 100% !important;
+      padding: 10px 14px !important;
+      margin: 2px 0 !important;
+      background: transparent !important;
+      border: none !important;
+      border-left: 3px solid transparent !important;
+      border-radius: 10px !important;
+      color: #94a3b8 !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      text-align: left !important;
+      cursor: pointer;
+    }
+    .m-side-btn:hover, .m-side-btn.active {
+      background: rgba(59, 130, 246, 0.16) !important;
+      border-left-color: #3b82f6 !important;
+      color: #fff !important;
+    }
+    .m-msg-badge {
+      margin-left: auto;
+      background: #ef4444;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 999px;
+    }
+    .m-premium-card {
+      background: linear-gradient(135deg, #1e1b4b, #3b0764);
+      border: 1px solid #581c87;
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .m-premium-card h4 { margin: 4px 0; font-size: 14px; color: #fff; }
+    .m-premium-card p { margin: 0 0 10px; font-size: 11px; color: #cbd5e1; }
+    .m-upgrade-btn {
+      background: linear-gradient(90deg, #3b82f6, #9333ea) !important;
+      padding: 8px !important;
+      font-size: 12px !important;
+      border-radius: 9px !important;
+      margin: 0 !important;
+    }
+    body.light-mode { background: #f1f5f9 !important; color: #0f172a !important; }
+    body.light-mode .profile-shell, body.light-mode .card { background: #ffffff !important; border-color: #cbd5e1 !important; color: #0f172a !important; }
     /* COMPACT PROFILE SPACING SO POSTS ARE VISIBLE WITHOUT SCROLLING */
     /* SLIM DUO LINK & MEMORIES ROW */
     .duo-mem-split {
