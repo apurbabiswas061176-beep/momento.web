@@ -51,6 +51,11 @@
     }
     body { background: #070b14 !important; }
     /* EXACT MOCKUP PROFILE STYLING */
+    /* Hide floating top Momento title, duplicate Edit button, and redundant drawer bar */
+    #appBox > h2:first-of-type { display: none !important; }
+    .profile-shell button[onclick="openEditModal()"]:not(.btn-edit-pill) { display: none !important; }
+    .profile-shell button[onclick*="toggleProfileDrawer"] { display: none !important; }
+    .profile-shell button[onclick*="quickAvatarInput"] { grid-column: 1 / -1 !important; width: 100% !important; }
     .profile-shell > .card > .row:first-child {
       display: flex !important;
       justify-content: space-between !important;
