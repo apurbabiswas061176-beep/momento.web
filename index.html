@@ -51,6 +51,35 @@
     }
     body { background: #070b14 !important; }
     /* EXACT MOCKUP PROFILE STYLING */
+    /* COMPACT PROFILE SPACING SO POSTS ARE VISIBLE WITHOUT SCROLLING */
+    #appBox { padding-top: 8px !important; padding-bottom: 66px !important; }
+    .profile-shell { margin-bottom: 10px !important; }
+    #profileCoverBanner { height: 105px !important; }
+    .profile-shell > .card { padding: 0 16px 12px !important; }
+    .profile-shell > .card > .row:first-child { margin-top: -28px !important; }
+    #userDp { width: 68px !important; height: 68px !important; margin-top: 0 !important; }
+    #momentoFollowStats { gap: 8px !important; margin-top: 8px !important; }
+    #momentoFollowStats > div { padding: 7px 6px !important; border-radius: 10px !important; }
+    #statFollowersCount, #statFollowingCount { font-size: 15px !important; }
+    .btn-photo-bar {
+      display: block !important;
+      width: 100% !important;
+      margin: 8px 0 0 0 !important;
+      padding: 6px !important;
+      font-size: 12px !important;
+    }
+    .duo-mem-split { gap: 8px !important; margin-top: 8px !important; }
+    #friendLinkBox, #memoriesSection { padding: 8px 10px !important; border-radius: 10px !important; }
+    #memoriesSection .memory-circle, #memoriesStrip > div > div:first-child {
+      width: 36px !important; height: 36px !important; font-size: 16px !important;
+    }
+    .mood-bar { margin-top: 4px !important; gap: 4px !important; }
+    .mood-btn { padding: 3px 8px !important; font-size: 11px !important; }
+    #storiesBar { padding-bottom: 2px !important; margin-bottom: 4px !important; font-size: 11px !important; }
+    #profileContentTabs { gap: 8px !important; margin-bottom: 8px !important; }
+    #profileContentTabs button { padding: 7px 12px !important; font-size: 12px !important; }
+    #profileGridSection { padding: 12px !important; }
+    #profilePhotoGrid > div { padding: 16px 10px !important; }
     /* Hide floating top Momento title, duplicate Edit button, and redundant drawer bar */
     #appBox > h2:first-of-type { display: none !important; }
     .profile-shell button[onclick="openEditModal()"]:not(.btn-edit-pill) { display: none !important; }
@@ -286,7 +315,7 @@
             <div style="font-size:12px;color:#60a5fa;font-weight:600;margin-top:2px;">Find People</div>
           </div>
         </div>
-        <div style="display:flex;gap:8px;margin-top:8px;"><button type="button" style="flex:1;margin:0;padding:7px 10px;font-size:12px;" onclick="openEditModal()" class="btn-edit-pill">Edit Profile</button>
+        <div style="display:flex;gap:8px;margin-top:8px;">
         <input type="file" id="quickAvatarInput" accept="image/*" style="display:none;" onchange="handleQuickAvatarUpload(event)" />
         <button type="button" onclick="document.getElementById('quickAvatarInput').click()" class="btn-photo-bar">Change Photo</button></div>
       <div style="display:flex;gap:8px;margin-top:8px;">
