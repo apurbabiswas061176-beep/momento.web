@@ -453,7 +453,102 @@
       background: #0b0f19 !important;
       border-color: #1e263d !important;
     }
-  </style>
+  
+    /* FINAL 3-COLUMN FULL-SCREEN BALANCED LAYOUT */
+    #desktopRightSidebar { display: none; }
+    @media (min-width: 1080px) {
+      html, body {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow-x: hidden !important;
+      }
+      #appBox {
+        display: grid !important;
+        grid-template-columns: 245px minmax(0, 1fr) 290px !important;
+        gap: 20px !important;
+        width: 100% !important;
+        max-width: 1420px !important;
+        margin: 0 auto !important;
+        padding: 16px 20px !important;
+        box-sizing: border-box !important;
+      }
+      #desktopRightSidebar {
+        display: flex !important;
+        flex-direction: column;
+        gap: 16px;
+        position: sticky;
+        top: 16px;
+        height: fit-content;
+      }
+    }
+    .m-widget-card {
+      background: #111625;
+      border: 1px solid #1e263d;
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .m-widget-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .m-widget-head a {
+      font-size: 12px;
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .m-sug-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(30, 38, 61, 0.7);
+    }
+    .m-sug-item:last-child { border-bottom: none; }
+    .m-sug-av {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid #334155;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .m-sug-item strong, .m-trend-item strong { display: block; font-size: 13px; color: #f8fafc; }
+    .m-sug-item small, .m-trend-item small { display: block; font-size: 11px; color: #94a3b8; }
+    .m-follow-sm {
+      width: auto !important;
+      margin: 0 !important;
+      padding: 5px 12px !important;
+      font-size: 11px !important;
+      border-radius: 7px !important;
+      background: #2563eb !important;
+    }
+    .m-trend-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(30, 38, 61, 0.7);
+      cursor: pointer;
+    }
+    .m-trend-item:last-child { border-bottom: none; }
+    .m-trend-item span { color: #64748b; font-size: 16px; }
+</style>
 </head>
 <body>
   <div class="container">
@@ -471,7 +566,7 @@
     </div>
 
     <!-- Main App Section -->
-    <div id="appBox" class="hidden" style="padding-bottom:76px;">
+    <div id="appBox" class="hidden">
 <aside id="desktopLeftSidebar">
   <div>
     <div class="m-brand">
@@ -588,6 +683,57 @@
       </div><!-- End Duo+Memories Side-by-Side Row --><!-- Add Memory Modal -->
       
 </div>
+
+<aside id="desktopRightSidebar">
+  <div class="m-widget-card">
+    <div class="m-widget-head">
+      <span>Suggested People</span>
+      <a href="javascript:void(0)" onclick="openFollowModal('discover')">See All &#8594;</a>
+    </div>
+    <div id="rightSuggestedUsers">
+      <div class="m-sug-item">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="m-sug-av">T</div>
+          <div><strong>TechVibes</strong><small>@techvibes</small></div>
+        </div>
+        <button type="button" class="m-follow-sm" onclick="openFollowModal('discover')">Follow</button>
+      </div>
+      <div class="m-sug-item">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="m-sug-av">D</div>
+          <div><strong>Dreamer_007</strong><small>@dreamer007</small></div>
+        </div>
+        <button type="button" class="m-follow-sm" onclick="openFollowModal('discover')">Follow</button>
+      </div>
+      <div class="m-sug-item">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="m-sug-av">R</div>
+          <div><strong>Royal_Boy</strong><small>@royal_boy</small></div>
+        </div>
+        <button type="button" class="m-follow-sm" onclick="openFollowModal('discover')">Follow</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-widget-card">
+    <div class="m-widget-head">
+      <span>Trending</span>
+      <a href="javascript:void(0)" onclick="openFollowModal('discover')">See All &#8594;</a>
+    </div>
+    <div class="m-trend-item" onclick="openFollowModal('discover')">
+      <div><strong>#Momento</strong><small>12.5K posts</small></div>
+      <span>&#8250;</span>
+    </div>
+    <div class="m-trend-item" onclick="openFollowModal('discover')">
+      <div><strong>#GoodVibes</strong><small>8.3K posts</small></div>
+      <span>&#8250;</span>
+    </div>
+    <div class="m-trend-item" onclick="openFollowModal('discover')">
+      <div><strong>#LifeGoals</strong><small>6.1K posts</small></div>
+      <span>&#8250;</span>
+    </div>
+  </div>
+</aside>
 <div id="addMemoryModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:999;align-items:center;justify-content:center;padding:16px;">
         <div style="background:#16161a;border:1px solid #2e2e36;border-radius:16px;padding:18px;width:100%;max-width:360px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
