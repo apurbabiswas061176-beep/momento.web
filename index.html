@@ -60,8 +60,7 @@
         width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
-        display: flex !important;
-        justify-content: center !important;
+        display: block !important;
       }
       #appBox {
         position: static !important;
@@ -455,6 +454,28 @@
     }
   
     /* FINAL 3-COLUMN FULL-SCREEN BALANCED LAYOUT */
+    @media (min-width: 1080px) {
+      body {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      #appBox:not(.hidden) {
+        display: grid !important;
+        grid-template-columns: 245px minmax(580px, 1fr) 295px !important;
+        gap: 22px !important;
+        width: 100% !important;
+        max-width: 1440px !important;
+        margin: 0 auto !important;
+        padding: 16px 24px !important;
+      }
+      #desktopCenterCol {
+        width: 100% !important;
+        min-width: 0 !important;
+      }
+    }
     #desktopRightSidebar { display: none; }
     @media (min-width: 1080px) {
       html, body {
@@ -864,20 +885,20 @@
 
       <!-- Feed -->
       <div id="feedList"></div>
-      <div id="profileContentTabs" style="max-width:728px;width:100%;box-sizing:border-box;margin:14px auto 0 auto;display:flex;gap:10px;flex-wrap:wrap;">
+      <div id="profileContentTabs" style="max-width: 1440px;width:100%;box-sizing:border-box;margin:14px auto 0 auto;display:flex;gap:10px;flex-wrap:wrap;">
   <button type="button" id="pTabPosts" onclick="switchProfileContentTab('posts')" style="flex:1;min-width:95px;margin:0;background:linear-gradient(135deg,#172554,#1e3a8a);border:1px solid #3b82f6;color:#fff;border-radius:12px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;">&#9638; Posts</button>
   <button type="button" id="pTabReels" onclick="switchProfileContentTab('reels')" style="flex:1;min-width:95px;margin:0;background:#16161d;border:1px solid #282834;color:#9ca3af;border-radius:12px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;">&#9654; Reels</button>
   <button type="button" id="pTabTagged" onclick="switchProfileContentTab('tagged')" style="flex:1;min-width:95px;margin:0;background:#16161d;border:1px solid #282834;color:#9ca3af;border-radius:12px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;">&#128278; Tagged</button>
 </div>
 
-<div style="max-width:728px;width:100%;box-sizing:border-box;margin:12px auto 0 auto;display:flex;align-items:center;gap:10px;background:#16161d;border:1px solid #282834;border-radius:14px;padding:8px 10px;">
+<div style="max-width: 1440px;width:100%;box-sizing:border-box;margin:12px auto 0 auto;display:flex;align-items:center;gap:10px;background:#16161d;border:1px solid #282834;border-radius:14px;padding:8px 10px;">
   <div onclick="openCreateComposer('post')" style="flex:1;background:#1c1c24;border:1px solid #2a2a36;border-radius:10px;padding:9px 14px;color:#9ca3af;font-size:13px;cursor:pointer;">What's on your mind?</div>
   <button type="button" onclick="openCreateComposer('post')" title="Add Photo" style="width:auto;margin:0;background:#1e1e26;border:1px solid #2e2e3a;color:#cbd5e1;border-radius:9px;padding:8px 10px;font-size:14px;cursor:pointer;">&#128444;</button>
   <button type="button" onclick="openCreateComposer('reel')" title="Add Reel" style="width:auto;margin:0;background:#1e1e26;border:1px solid #2e2e3a;color:#cbd5e1;border-radius:9px;padding:8px 10px;font-size:14px;cursor:pointer;">&#127916;</button>
   <button type="button" onclick="openCreateComposer('post')" style="width:auto;margin:0;background:linear-gradient(135deg,#2563eb,#7c3aed);border:none;color:#fff;border-radius:10px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;">Post</button>
 </div>
 
-<div id="profileGridSection" style="max-width:728px;width:100%;box-sizing:border-box;margin:12px auto 80px auto;background:#1c1c22;border:1px solid #2e2e36;border-radius:12px;padding:12px;">
+<div id="profileGridSection" style="max-width: 1440px;width:100%;box-sizing:border-box;margin:12px auto 80px auto;background:#1c1c22;border:1px solid #2e2e36;border-radius:12px;padding:12px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12px;color:#a1a1aa;">
           <span>&#128248; My Posts Grid</span>
           <span id="profilePostCount" style="color:#60a5fa;font-weight:600;">0 posts</span>
