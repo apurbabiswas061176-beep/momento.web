@@ -52,13 +52,24 @@
     body { background: #070b14 !important; }
     /* EXACT MOCKUP PROFILE STYLING */
     /* LEFT NAVIGATION SIDEBAR (DESKTOP) */
+    /* WIDER DESKTOP CONTENT & SINGLE-LINE CONTROLS */
+    @media (min-width: 820px) {
+      #desktopCenterCol .card,
+      #desktopCenterCol .profile-shell {
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+      .btn-edit-pill {
+        white-space: nowrap !important;
+      }
+    }
     @media (min-width: 820px) {
       #appBox {
         display: grid !important;
-        grid-template-columns: 245px minmax(0, 740px) !important;
+        grid-template-columns: 250px minmax(0, 980px) !important;
         justify-content: center !important; align-items: start !important;
         gap: 24px !important;
-        max-width: 1120px !important;
+        max-width: 1320px !important;
         margin: 0 auto !important;
         padding: 16px 20px !important;
       }
