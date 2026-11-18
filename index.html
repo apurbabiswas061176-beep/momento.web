@@ -592,6 +592,20 @@
         height: fit-content !important;
       }
     }
+
+    @media (min-width: 1080px) {
+      #profileCoverBanner { height: 95px !important; }
+      .profile-shell { margin-bottom: 10px !important; }
+      .profile-shell > .card { padding: 0 18px 12px !important; }
+      #momentoFollowStats { margin-top: 8px !important; }
+      #momentoFollowStats > div { padding: 7px 8px !important; }
+      .btn-photo-bar { margin-top: 8px !important; padding: 6px !important; }
+      .duo-mem-split { margin-top: 8px !important; }
+      #storiesBar { display: none !important; }
+      #profileContentTabs { margin-bottom: 8px !important; }
+      #profileGridSection { padding: 12px !important; }
+      #profilePhotoGrid > div { padding: 14px 10px !important; }
+    }
 </style>
 </head>
 <body>
@@ -788,7 +802,7 @@
           <img id="viewMemImg" src="" style="width:100%;max-height:320px;object-fit:cover;border-radius:12px;margin-bottom:10px;" />
           <p id="viewMemCaption" style="font-size:13px;color:#d4d4d8;margin:0 0 12px;"></p>
           <button type="button" id="deleteMemBtn" style="background:#3f1d24;color:#fda4af;font-size:12px;padding:8px;">Delete Memory</button>
-        </div>
+        
       
 
       <!-- Instagram-style Edit Profile Modal -->
