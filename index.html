@@ -247,6 +247,7 @@
         <div id="displayBio" style="font-size:13px;color:#e5e7eb;margin-top:4px;white-space:pre-line;"></div>
           <div id="displayLocation" onclick="detectUserLocation(true)" title="Click to refresh exact location" style="font-size:12px;color:#60a5fa;margin-top:4px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;"><span>&#128205;</span><span id="locationText">Detecting location...</span></div>
       </div>
+          <button type="button" onclick="openEditModal()" class="btn-edit-pill">&#9998; Edit Profile</button>
     </div>
             <div id="momentoFollowStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;text-align:center;">
           <div onclick="openFollowModal('followers')" style="cursor:pointer;background:#16161d;border:1px solid #282834;border-radius:12px;padding:12px 8px;">
@@ -273,6 +274,7 @@
     <span>Mood Aura</span><span style="color:#60a5fa;font-size:11px;">&#9662;</span>
   </button>
 </div>
+<div class="duo-mem-split">
 <div id="friendLinkBox" style="display:none;margin-top:8px;background:#1c1c22;border:1px solid #2e2e36;border-radius:10px;padding:10px;">
         <div style="font-size:12px;color:#a1a1aa;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;">
           <span>Duo Link (Co-DP)</span>
@@ -303,6 +305,7 @@
           <div id="memoriesList" style="display:flex;gap:12px;"></div>
         </div>
       </div>
+</div>
 
       </div><!-- End Duo+Memories Side-by-Side Row --><!-- Add Memory Modal -->
       <div id="addMemoryModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:999;align-items:center;justify-content:center;padding:16px;">
