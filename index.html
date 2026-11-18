@@ -705,6 +705,8 @@
       
 </div>
 
+
+</div>
 <aside id="desktopRightSidebar">
   <div class="m-widget-card">
     <div class="m-widget-head">
@@ -712,27 +714,7 @@
       <a href="javascript:void(0)" onclick="openFollowModal('discover')">See All &#8594;</a>
     </div>
     <div id="rightSuggestedUsers">
-      <div class="m-sug-item">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div class="m-sug-av">T</div>
-          <div><strong>TechVibes</strong><small>@techvibes</small></div>
-        </div>
-        <button type="button" class="m-follow-sm" onclick="openFollowModal('discover')">Follow</button>
-      </div>
-      <div class="m-sug-item">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div class="m-sug-av">D</div>
-          <div><strong>Dreamer_007</strong><small>@dreamer007</small></div>
-        </div>
-        <button type="button" class="m-follow-sm" onclick="openFollowModal('discover')">Follow</button>
-      </div>
-      <div class="m-sug-item">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div class="m-sug-av">R</div>
-          <div><strong>Royal_Boy</strong><small>@royal_boy</small></div>
-        </div>
-        <button type="button" class="m-follow-sm" onclick="openFollowModal('discover')">Follow</button>
-      </div>
+      <div style="font-size:12px;color:#94a3b8;padding:8px 0;">Loading real users...</div>
     </div>
   </div>
 
@@ -741,17 +723,8 @@
       <span>Trending</span>
       <a href="javascript:void(0)" onclick="openFollowModal('discover')">See All &#8594;</a>
     </div>
-    <div class="m-trend-item" onclick="openFollowModal('discover')">
-      <div><strong>#Momento</strong><small>12.5K posts</small></div>
-      <span>&#8250;</span>
-    </div>
-    <div class="m-trend-item" onclick="openFollowModal('discover')">
-      <div><strong>#GoodVibes</strong><small>8.3K posts</small></div>
-      <span>&#8250;</span>
-    </div>
-    <div class="m-trend-item" onclick="openFollowModal('discover')">
-      <div><strong>#LifeGoals</strong><small>6.1K posts</small></div>
-      <span>&#8250;</span>
+    <div id="rightTrendingList">
+      <div style="font-size:12px;color:#94a3b8;padding:8px 0;">Scanning posts...</div>
     </div>
   </div>
 </aside>
@@ -1767,6 +1740,68 @@ function switchProfileContentTab(tab) {
     loadMyProfilePosts();
   }
 }
+</script>
+
+<script>
+async function loadLiveRightWidgets() {
+  if (typeof currentUser === "undefined" || !currentUser || !currentUser.email) return;
+
+  // 1. Fetch real Suggested People from /api/users/discover/
+  try {
+    const uRes = await fetch(API + "/api/users/discover/?email=" + encodeURIComponent(currentUser.email) + "&q=");
+    if (uRes.ok) {
+      const uData = await uRes.json();
+      const users = (uData.users || []).slice(0, 4);
+      const uBox = document.getElementById("rightSuggestedUsers");
+      if (uBox) {
+        if (!users.length) {
+          uBox.innerHTML = '<div style="font-size:12px;color:#94a3b8;padding:6px 0;">No other users registered yet.</div>';
+        } else {
+          uBox.innerHTML = users.map(u => {
+            const pic = u.profile_pic
+              ? '<img src="' + u.profile_pic + '" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid #334155;">'
+              : '<div class="m-sug-av">' + (u.username || "U").charAt(0).toUpperCase() + '</div>';
+            return '<div class="m-sug-item"><div style="display:flex;align-items:center;gap:10px;min-width:0;">' + pic +
+                   '<div style="min-width:0;"><strong style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + u.username + '</strong>' +
+                   '<small>@' + u.username.toLowerCase() + '</small></div></div>' +
+                   '<button type="button" class="m-follow-sm" onclick="toggleFollowUser(' + u.id + ', this)">' + (u.is_following ? "Following" : "Follow") + '</button></div>';
+          }).join("");
+        }
+      }
+    }
+  } catch (e) {}
+
+  // 2. Compute real Trending Hashtags from actual posts in /api/feed/
+  try {
+    const fRes = await fetch(API + "/api/feed/?email=" + encodeURIComponent(currentUser.email));
+    if (fRes.ok) {
+      const fData = await fRes.json();
+      const posts = fData.posts || [];
+      const counts = {};
+      posts.forEach(p => {
+        const matches = (p.caption || "").match(/#[a-zA-Z0-9_]+/g) || [];
+        matches.forEach(tag => {
+          const key = tag.toLowerCase();
+          if (!counts[key]) counts[key] = { label: tag, count: 0 };
+          counts[key].count++;
+        });
+      });
+      const sorted = Object.values(counts).sort((a, b) => b.count - a.count).slice(0, 4);
+      const tBox = document.getElementById("rightTrendingList");
+      if (tBox) {
+        if (!sorted.length) {
+          tBox.innerHTML = '<div style="font-size:12px;color:#94a3b8;padding:6px 0;">No #hashtags posted yet. Add a #tag to your first post!</div>';
+        } else {
+          tBox.innerHTML = sorted.map(item =>
+            '<div class="m-trend-item"><div><strong>' + item.label + '</strong>' +
+            '<small>' + item.count + (item.count === 1 ? ' post' : ' posts') + '</small></div><span>&#8250;</span></div>'
+          ).join("");
+        }
+      }
+    }
+  } catch (e) {}
+}
+window.addEventListener("load", () => { setTimeout(loadLiveRightWidgets, 1400); });
 </script>
 </body>
 </html>
