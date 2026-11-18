@@ -56,7 +56,7 @@
       #appBox {
         display: grid !important;
         grid-template-columns: 245px minmax(0, 740px) !important;
-        justify-content: center !important;
+        justify-content: center !important; align-items: start !important;
         gap: 24px !important;
         max-width: 1120px !important;
         margin: 0 auto !important;
@@ -590,7 +590,7 @@
       <!-- Stories Bar & Upload Story -->
   <!-- Instagram-style Horizontal Stories Strip (DP + Story Merged) -->
   
-</div>
+
 <div id="storiesBar" class="stories" style="display:flex;gap:14px;overflow-x:auto;padding:10px 4px;margin-bottom:12px;"></div>
   <input type="file" id="storyInput" accept="image/*" onchange="uploadStory()" style="display:none;" />
   <p id="storyMsg" class="status" style="text-align:center;margin:0 0 8px 0;"></p>
