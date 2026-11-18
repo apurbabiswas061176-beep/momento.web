@@ -410,6 +410,40 @@
 
     <!-- Main App Section -->
     <div id="appBox" class="hidden" style="padding-bottom:76px;">
+<aside id="desktopLeftSidebar">
+  <div>
+    <div class="m-brand">
+      <div class="m-brand-icon">M</div>
+      <span>Momento</span>
+    </div>
+    <nav>
+      <button type="button" class="m-side-btn active" onclick="navHome()"><span>&#127968;</span> Home</button>
+      <button type="button" class="m-side-btn" onclick="openFollowModal('discover')"><span>&#129517;</span> Explore</button>
+      <button type="button" class="m-side-btn" onclick="switchProfileContentTab('reels')"><span>&#127916;</span> Reels</button>
+      <button type="button" class="m-side-btn" onclick="openFollowModal('following')"><span>&#128172;</span> Messages <span class="m-msg-badge">3</span></button>
+      <button type="button" class="m-side-btn" onclick="openFollowModal('followers')"><span>&#128276;</span> Notifications</button>
+      <button type="button" class="m-side-btn" onclick="openCreatePicker()"><span>&#10133;</span> Create</button>
+      <button type="button" class="m-side-btn" onclick="navProfile()"><span>&#128100;</span> Profile</button>
+    </nav>
+  </div>
+  <div>
+    <div class="m-premium-card">
+      <div style="font-size:20px;">&#128081;</div>
+      <h4>Go Premium</h4>
+      <p>Unlock more features</p>
+      <button type="button" class="m-upgrade-btn" onclick="openEditModal()">Upgrade &#8594;</button>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;padding-top:4px;">
+      <span>&#9728;&#65039;</span>
+      <button type="button" onclick="document.body.classList.toggle('light-mode')" style="width:44px;height:22px;border-radius:99px;background:#2563eb;padding:2px;margin:0;">
+        <span style="display:block;width:16px;height:16px;border-radius:50%;background:#fff;margin-left:auto;"></span>
+      </button>
+      <span>&#127769;</span>
+    </div>
+  </div>
+</aside>
+<div id="desktopCenterCol" style="min-width:0;">
+
       <div class="profile-shell">
 <div id="profileCoverBanner">
         <input type="file" id="coverPhotoInput" accept="image/*" style="display:none;" onchange="handleCoverUpload(event)" />
@@ -490,7 +524,9 @@
 </div>
 
       </div><!-- End Duo+Memories Side-by-Side Row --><!-- Add Memory Modal -->
-      <div id="addMemoryModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:999;align-items:center;justify-content:center;padding:16px;">
+      
+</div>
+<div id="addMemoryModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:999;align-items:center;justify-content:center;padding:16px;">
         <div style="background:#16161a;border:1px solid #2e2e36;border-radius:16px;padding:18px;width:100%;max-width:360px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
             <strong style="font-size:15px;">Save a Memory</strong>
