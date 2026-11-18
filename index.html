@@ -54,6 +54,28 @@
     /* LEFT NAVIGATION SIDEBAR (DESKTOP) */
     /* WIDER DESKTOP CONTENT & SINGLE-LINE CONTROLS */
     /* FULL DESKTOP WIDTH OVERRIDE */
+    /* TRUE HORIZONTAL CENTERING FOR APPBOX */
+    @media (min-width: 820px) {
+      html, body {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+      }
+      #appBox {
+        position: static !important;
+        left: auto !important;
+        right: auto !important;
+        transform: none !important;
+        margin: 0 auto !important;
+        max-width: 1220px !important;
+        width: 100% !important;
+        grid-template-columns: 245px minmax(0, 1fr) !important;
+        gap: 24px !important;
+        padding: 16px 24px !important;
+      }
+    }
     @media (min-width: 820px) {
       body {
         max-width: 100% !important;
