@@ -569,6 +569,29 @@
     }
     .m-trend-item:last-child { border-bottom: none; }
     .m-trend-item span { color: #64748b; font-size: 16px; }
+
+    @media (min-width: 1080px) {
+      #desktopLeftSidebar {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+      }
+      #desktopCenterCol {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+      }
+      #desktopRightSidebar {
+        grid-column: 3 !important;
+        grid-row: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
+        position: sticky !important;
+        top: 16px !important;
+        height: fit-content !important;
+      }
+    }
 </style>
 </head>
 <body>
@@ -755,7 +778,7 @@
           <p id="viewMemCaption" style="font-size:13px;color:#d4d4d8;margin:0 0 12px;"></p>
           <button type="button" id="deleteMemBtn" style="background:#3f1d24;color:#fda4af;font-size:12px;padding:8px;">Delete Memory</button>
         </div>
-      </div>
+      
 
       <!-- Instagram-style Edit Profile Modal -->
     <div id="editModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:999;align-items:center;justify-content:center;padding:16px;">
