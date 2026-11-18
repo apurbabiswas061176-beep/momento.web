@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://w3.org viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%233b82f6%22/><text x=%2250%25%22 y=%2255%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23fff%22 font-family=%22Arial%22 font-weight=%22bold%22 font-size=%2236%22>M</text></svg>">
@@ -49,6 +49,166 @@
       filter: drop-shadow(0 0 18px rgba(236,72,153,0.9));
       z-index: 20;
     }
+    body { background: #070b14 !important; }
+    /* EXACT MOCKUP PROFILE STYLING */
+    .profile-shell {
+      background: #0d121f !important;
+      border: 1px solid #1c253b !important;
+      border-radius: 18px !important;
+      overflow: hidden;
+      margin-bottom: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    }
+    #profileCoverBanner {
+      height: 155px !important;
+      background: radial-gradient(circle at 75% 35%, rgba(16, 185, 129, 0.55), transparent 55%),
+                  radial-gradient(circle at 20% 25%, rgba(56, 189, 248, 0.55), transparent 50%),
+                  linear-gradient(120deg, #0c1938 0%, #0a2e38 55%, #071921 100%) !important;
+      position: relative;
+    }
+    .profile-shell > .card {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 22px 22px !important;
+      margin: 0 !important;
+    }
+    .profile-top-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: -44px;
+      margin-bottom: 16px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    #userDp {
+      width: 96px !important;
+      height: 96px !important;
+      border: 3px solid #38bdf8 !important;
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.65), inset 0 0 12px rgba(56, 189, 248, 0.4) !important;
+      margin-top: 0 !important;
+    }
+    .btn-edit-pill {
+      width: auto !important;
+      margin: 0 !important;
+      background: #141c2f !important;
+      border: 1px solid #283554 !important;
+      color: #e2e8f0 !important;
+      border-radius: 10px !important;
+      padding: 8px 16px !important;
+      font-size: 13px !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-edit-pill:hover {
+      border-color: #38bdf8 !important;
+      background: #1a243d !important;
+    }
+    #momentoFollowStats {
+      gap: 12px !important;
+      margin-top: 14px !important;
+    }
+    #momentoFollowStats > div {
+      background: #111726 !important;
+      border: 1px solid #1e2942 !important;
+      border-radius: 12px !important;
+      padding: 14px 10px !important;
+      transition: 0.2s;
+    }
+    #momentoFollowStats > div:hover {
+      border-color: #38bdf8 !important;
+    }
+    .btn-photo-bar {
+      width: 100% !important;
+      margin: 12px 0 0 0 !important;
+      background: #111726 !important;
+      border: 1px solid #1e2942 !important;
+      color: #60a5fa !important;
+      border-radius: 11px !important;
+      padding: 10px !important;
+      font-size: 13px !important;
+    }
+    .duo-mem-split {
+      display: grid;
+      grid-template-columns: 1fr 165px;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    @media (max-width: 640px) {
+      .duo-mem-split { grid-template-columns: 1fr; }
+    }
+    #friendLinkBox {
+      display: block !important;
+      background: #111726 !important;
+      border: 1px solid #1e2942 !important;
+      border-radius: 14px !important;
+      padding: 14px !important;
+      margin: 0 !important;
+    }
+    #memoriesSection {
+      background: #111726 !important;
+      border: 1px solid #1e2942 !important;
+      border-radius: 14px !important;
+      padding: 14px !important;
+      margin: 0 !important;
+    }
+    #profileContentTabs button {
+      border-radius: 999px !important;
+      padding: 10px 16px !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      transition: 0.2s;
+    }
+    #pTabPosts {
+      background: linear-gradient(135deg, #172554, #1e40af) !important;
+      border: 1px solid #3b82f6 !important;
+      box-shadow: 0 0 16px rgba(59, 130, 246, 0.35);
+      color: #fff !important;
+    }
+    #pTabReels, #pTabTagged {
+      background: #111726 !important;
+      border: 1px solid #1e2942 !important;
+      color: #94a3b8 !important;
+    }
+    .empty-posts-card {
+      background: #0d121f;
+      border: 1px solid #1c253b;
+      border-radius: 16px;
+      padding: 44px 20px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .profile-shell {
+      background: #111625;
+      border: 1px solid #1e263d;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    #profileCoverBanner {
+      margin: 0 !important;
+      height: 145px !important;
+      border-radius: 0 !important;
+      background: linear-gradient(115deg, #1d4ed8 0%, #0d9488 55%, #064e3b 100%) !important;
+      -webkit-mask-image: none !important;
+      mask-image: none !important;
+    }
+    .profile-shell > .card {
+      background: transparent !important;
+      border: none !important;
+      margin-bottom: 0 !important;
+      padding-top: 0 !important;
+    }
+    #userDp {
+      width: 84px !important;
+      height: 84px !important;
+      margin-top: -38px !important;
+    }
+    #momentoFollowStats > div {
+      background: #0b0f19 !important;
+      border-color: #1e263d !important;
+    }
   </style>
 </head>
 <body>
@@ -68,7 +228,8 @@
 
     <!-- Main App Section -->
     <div id="appBox" class="hidden" style="padding-bottom:76px;">
-      <div id="profileCoverBanner" style="position:relative;height:185px;margin:-20px -20px -102px -20px;border-radius:14px 14px 0 0;background:radial-gradient(circle at 20% 20%,rgba(29,78,216,0.55),transparent 65%),radial-gradient(circle at 85% 30%,rgba(16,185,129,0.45),transparent 60%),linear-gradient(180deg,rgba(15,23,42,0.85) 0%,rgba(22,22,26,0) 100%);background-size:cover;background-position:center;-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,1) 35%,rgba(0,0,0,0) 100%);mask-image:linear-gradient(to bottom,rgba(0,0,0,1) 35%,rgba(0,0,0,0) 100%);pointer-events:auto;">
+      <div class="profile-shell">
+<div id="profileCoverBanner" style="position:relative;height:185px;margin:-20px -20px -102px -20px;border-radius:14px 14px 0 0;background:radial-gradient(circle at 20% 20%,rgba(29,78,216,0.55),transparent 65%),radial-gradient(circle at 85% 30%,rgba(16,185,129,0.45),transparent 60%),linear-gradient(180deg,rgba(15,23,42,0.85) 0%,rgba(22,22,26,0) 100%);background-size:cover;background-position:center;-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,1) 35%,rgba(0,0,0,0) 100%);mask-image:linear-gradient(to bottom,rgba(0,0,0,1) 35%,rgba(0,0,0,0) 100%);pointer-events:auto;">
         <input type="file" id="coverPhotoInput" accept="image/*" style="display:none;" onchange="handleCoverUpload(event)" />
         <button type="button" onclick="document.getElementById('coverPhotoInput').click()" style="position:absolute;top:10px;right:10px;width:auto;margin:0;padding:4px 9px;font-size:11px;border-radius:8px;background:rgba(0,0,0,0.65);border:1px solid rgba(255,255,255,0.2);color:#fff;cursor:pointer;">&#128247; Cover</button>
       </div>
@@ -101,9 +262,9 @@
             <div style="font-size:12px;color:#60a5fa;font-weight:600;margin-top:2px;">Find People</div>
           </div>
         </div>
-        <div style="display:flex;gap:8px;margin-top:8px;"><button type="button" style="flex:1;margin:0;padding:7px 10px;font-size:12px;" onclick="openEditModal()" style="margin-top:12px;background:#26262e;border:1px solid #3f3f46;color:#fff;font-weight:600;border-radius:8px;padding:8px;">Edit Profile</button>
+        <div style="display:flex;gap:8px;margin-top:8px;"><button type="button" style="flex:1;margin:0;padding:7px 10px;font-size:12px;" onclick="openEditModal()" class="btn-edit-pill">Edit Profile</button>
         <input type="file" id="quickAvatarInput" accept="image/*" style="display:none;" onchange="handleQuickAvatarUpload(event)" />
-        <button type="button" onclick="document.getElementById('quickAvatarInput').click()" style="flex:1;margin:0;background:#1c1c22;border:1px solid #2e2e36;color:#60a5fa;font-weight:600;border-radius:8px;padding:7px 10px;font-size:12px;">Change Photo</button></div>
+        <button type="button" onclick="document.getElementById('quickAvatarInput').click()" class="btn-photo-bar">Change Photo</button></div>
       <div style="display:flex;gap:8px;margin-top:8px;">
   <button type="button" onclick="toggleProfileDrawer('friendLinkBox')" style="flex:1;margin:0;background:#18181f;border:1px solid #2a2a35;color:#cbd5e1;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;">
     <span>Duo Link (Co-DP)</span><span style="color:#60a5fa;font-size:11px;">&#9662;</span>
@@ -202,12 +363,14 @@
       <button type="button" class="mood-btn" onclick="setMood('focused')">🎯 Focused</button>
       <button type="button" class="mood-btn" onclick="setMood('nostalgic')">📼 Nostalgic</button>
       <button type="button" class="mood-btn" onclick="setMood('night_owl')">🦉 Night Owl</button>
-    </div></div>
-      </div>
+    </div>
+      
 
       <!-- Stories Bar & Upload Story -->
   <!-- Instagram-style Horizontal Stories Strip (DP + Story Merged) -->
-  <div id="storiesBar" class="stories" style="display:flex;gap:14px;overflow-x:auto;padding:10px 4px;margin-bottom:12px;"></div>
+  
+</div>
+<div id="storiesBar" class="stories" style="display:flex;gap:14px;overflow-x:auto;padding:10px 4px;margin-bottom:12px;"></div>
   <input type="file" id="storyInput" accept="image/*" onchange="uploadStory()" style="display:none;" />
   <p id="storyMsg" class="status" style="text-align:center;margin:0 0 8px 0;"></p>
 
@@ -290,7 +453,13 @@
           <span>&#128248; My Posts Grid</span>
           <span id="profilePostCount" style="color:#60a5fa;font-weight:600;">0 posts</span>
         </div>
-        <div id="profilePhotoGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;"></div>
+        <div id="profilePhotoGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+            <div style="grid-column:1/-1;text-align:center;padding:34px 12px;">
+              <div style="font-size:38px;margin-bottom:8px;filter:drop-shadow(0 0 12px rgba(96,165,250,0.6));">&#128444;&#65039;</div>
+              <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:4px;">No posts yet</div>
+              <div style="font-size:13px;color:#94a3b8;">Share your first post with the world!</div>
+            </div>
+          </div>
       </div>
       <button style="background:#333;" onclick="logout()">Log Out</button>
     </div>
