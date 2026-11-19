@@ -707,21 +707,7 @@
         </div>
         <div style="display:flex;gap:8px;margin-top:8px;">
         <input type="file" id="quickAvatarInput" accept="image/*" style="display:none;" onchange="handleQuickAvatarUpload(event)" />
-        <button type="button" onclick="document.getElementById('quickAvatarInput').click()" class="btn-photo-bar">Change Photo</button>
-      <!-- 5 Moods Selector -->
-      <div id="moodSelectorBox" style="margin:12px 0;background:#16161d;border:1px solid #282834;border-radius:12px;padding:10px 12px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <span style="font-size:12px;font-weight:600;color:#94a3b8;">Current Mood</span>
-          <span id="activeMoodLabel" style="font-size:11px;color:#38bdf8;font-weight:600;">&#128526; Chill</span>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;">
-          <button type="button" class="mood-pill" onclick="setUserMood('&#128522; Happy', this)" style="padding:7px 4px;border-radius:8px;background:#1e293b;border:1px solid #334155;color:#e2e8f0;font-size:11px;cursor:pointer;margin:0;">&#128522; Happy</button>
-          <button type="button" class="mood-pill" onclick="setUserMood('&#128526; Chill', this)" style="padding:7px 4px;border-radius:8px;background:linear-gradient(135deg,#172554,#1e3a8a);border:1px solid #3b82f6;color:#fff;font-size:11px;cursor:pointer;margin:0;">&#128526; Chill</button>
-          <button type="button" class="mood-pill" onclick="setUserMood('&#128293; Hype', this)" style="padding:7px 4px;border-radius:8px;background:#1e293b;border:1px solid #334155;color:#e2e8f0;font-size:11px;cursor:pointer;margin:0;">&#128293; Hype</button>
-          <button type="button" class="mood-pill" onclick="setUserMood('&#127911; Focus', this)" style="padding:7px 4px;border-radius:8px;background:#1e293b;border:1px solid #334155;color:#e2e8f0;font-size:11px;cursor:pointer;margin:0;">&#127911; Focus</button>
-          <button type="button" class="mood-pill" onclick="setUserMood('&#127769; Lowkey', this)" style="padding:7px 4px;border-radius:8px;background:#1e293b;border:1px solid #334155;color:#e2e8f0;font-size:11px;cursor:pointer;margin:0;">&#127769; Lowkey</button>
-        </div>
-      </div></div>
+        <button type="button" onclick="document.getElementById('quickAvatarInput').click()" class="btn-photo-bar">Change Photo</button></div>
       <div style="display:flex;gap:8px;margin-top:8px;">
   <button type="button" onclick="toggleProfileDrawer('friendLinkBox')" style="flex:1;margin:0;background:#18181f;border:1px solid #2a2a35;color:#cbd5e1;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;">
     <span>Duo Link (Co-DP)</span><span style="color:#60a5fa;font-size:11px;">&#9662;</span>
@@ -764,6 +750,21 @@
 </div>
 
       </div><!-- End Duo+Memories Side-by-Side Row -->
+
+            <!-- 5 Moods Selector -->
+      <div id="moodSelectorBox" style="width:100%;box-sizing:border-box;margin:14px 0 0 0;background:#1c1c22;border:1px solid #2e2e36;border-radius:12px;padding:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span style="font-size:12px;font-weight:600;color:#94a3b8;">Current Mood Ring</span>
+          <span id="activeMoodLabel" style="font-size:12px;color:#38bdf8;font-weight:600;">&#128526; Chill</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;">
+          <button type="button" class="mood-pill" data-mood="&#128522; Happy" onclick="setUserMood('&#128522; Happy', '#facc15', this)" style="padding:8px 6px;border-radius:8px;background:#16161d;border:1px solid #282834;color:#e2e8f0;font-size:12px;font-weight:600;cursor:pointer;margin:0;">&#128522; Happy</button>
+          <button type="button" class="mood-pill" data-mood="&#128526; Chill" onclick="setUserMood('&#128526; Chill', '#38bdf8', this)" style="padding:8px 6px;border-radius:8px;background:linear-gradient(135deg,#172554,#1e3a8a);border:1px solid #38bdf8;color:#fff;font-size:12px;font-weight:600;cursor:pointer;margin:0;">&#128526; Chill</button>
+          <button type="button" class="mood-pill" data-mood="&#128293; Hype" onclick="setUserMood('&#128293; Hype', '#f97316', this)" style="padding:8px 6px;border-radius:8px;background:#16161d;border:1px solid #282834;color:#e2e8f0;font-size:12px;font-weight:600;cursor:pointer;margin:0;">&#128293; Hype</button>
+          <button type="button" class="mood-pill" data-mood="&#127911; Focus" onclick="setUserMood('&#127911; Focus', '#a855f7', this)" style="padding:8px 6px;border-radius:8px;background:#16161d;border:1px solid #282834;color:#e2e8f0;font-size:12px;font-weight:600;cursor:pointer;margin:0;">&#127911; Focus</button>
+          <button type="button" class="mood-pill" data-mood="&#127769; Lowkey" onclick="setUserMood('&#127769; Lowkey', '#10b981', this)" style="padding:8px 6px;border-radius:8px;background:#16161d;border:1px solid #282834;color:#e2e8f0;font-size:12px;font-weight:600;cursor:pointer;margin:0;">&#127769; Lowkey</button>
+        </div>
+      </div>
 
       <div id="profileGridSection" style="width:100%;box-sizing:border-box;margin:14px 0 0 0;background:#1c1c22;border:1px solid #2e2e36;border-radius:12px;padding:12px;">
         <div style="display:flex;gap:8px;margin-bottom:12px;border-bottom:1px solid #2e2e36;padding-bottom:10px;">
@@ -1860,29 +1861,59 @@ async function loadLiveRightWidgets() {
 window.addEventListener("load", () => { loadLiveRightWidgets(); setInterval(loadLiveRightWidgets, 4000); });
 </script>
 <script>
-function setUserMood(moodText, btn) {
-  document.getElementById('activeMoodLabel').innerHTML = moodText;
+function applyDpMoodRing(ringColor) {
+  const dpCandidates = document.querySelectorAll('#profileAvatar, #myProfileAvatar, #profilePic, .profile-avatar, #profileSection img, #profileView img');
+  let targetDp = dpCandidates[0];
+  if (!targetDp) {
+    // Fallback: grab the circular avatar element inside the top profile header
+    document.querySelectorAll('img, div').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (!targetDp && r.width >= 60 && r.width <= 130 && Math.abs(r.width - r.height) < 6 && getComputedStyle(el).borderRadius.includes('50')) {
+        targetDp = el;
+      }
+    });
+  }
+  if (targetDp) {
+    targetDp.style.transition = 'box-shadow 0.3s ease, border-color 0.3s ease';
+    targetDp.style.border = '3px solid ' + ringColor;
+    targetDp.style.boxShadow = '0 0 0 3px ' + ringColor + '55, 0 0 18px ' + ringColor;
+  }
+}
+
+function setUserMood(moodText, ringColor, btn) {
+  const label = document.getElementById('activeMoodLabel');
+  if (label) {
+    label.innerHTML = moodText;
+    label.style.color = ringColor;
+  }
   localStorage.setItem('momento_user_mood', moodText);
+  localStorage.setItem('momento_user_mood_color', ringColor);
+  applyDpMoodRing(ringColor);
+
   document.querySelectorAll('.mood-pill').forEach(b => {
-    b.style.background = '#1e293b';
-    b.style.border = '1px solid #334155';
+    b.style.background = '#16161d';
+    b.style.border = '1px solid #282834';
     b.style.color = '#e2e8f0';
   });
   if (btn) {
-    btn.style.background = 'linear-gradient(135deg,#172554,#1e3a8a)';
-    btn.style.border = '1px solid #3b82f6';
+    btn.style.background = ringColor + '28';
+    btn.style.border = '1px solid ' + ringColor;
     btn.style.color = '#fff';
   }
 }
+
 window.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('momento_user_mood');
-  if (saved && document.getElementById('activeMoodLabel')) {
-    document.getElementById('activeMoodLabel').innerHTML = saved;
-  }
+  const savedMood = localStorage.getItem('momento_user_mood') || '&#128526; Chill';
+  const savedColor = localStorage.getItem('momento_user_mood_color') || '#38bdf8';
+  setTimeout(() => {
+    const matchingBtn = Array.from(document.querySelectorAll('.mood-pill')).find(b => b.innerHTML.trim() === savedMood.trim());
+    setUserMood(savedMood, savedColor, matchingBtn);
+  }, 200);
 });
 </script>
 </body>
 </html>
+
 
 
 
