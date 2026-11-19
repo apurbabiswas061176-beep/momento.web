@@ -1865,18 +1865,18 @@ function applyDpMoodRing(ringColor) {
   const dpCandidates = document.querySelectorAll('#profileAvatar, #myProfileAvatar, #profilePic, .profile-avatar, #profileSection img, #profileView img');
   let targetDp = dpCandidates[0];
   if (!targetDp) {
-    // Fallback: grab the circular avatar element inside the top profile header
     document.querySelectorAll('img, div').forEach(el => {
       const r = el.getBoundingClientRect();
-      if (!targetDp && r.width >= 60 && r.width <= 130 && Math.abs(r.width - r.height) < 6 && getComputedStyle(el).borderRadius.includes('50')) {
+      const br = getComputedStyle(el).borderRadius;
+      if (!targetDp && r.width >= 60 && r.width <= 130 && Math.abs(r.width - r.height) < 6 && (br.includes('50') || parseFloat(br) >= 30)) {
         targetDp = el;
       }
     });
   }
   if (targetDp) {
-    targetDp.style.transition = 'box-shadow 0.3s ease, border-color 0.3s ease';
-    targetDp.style.border = '3px solid ' + ringColor;
-    targetDp.style.boxShadow = '0 0 0 3px ' + ringColor + '55, 0 0 18px ' + ringColor;
+    targetDp.style.setProperty('transition', 'box-shadow 0.3s ease, border-color 0.3s ease', 'important');
+    targetDp.style.setProperty('border', '3px solid ' + ringColor, 'important');
+    targetDp.style.setProperty('box-shadow', '0 0 0 4px ' + ringColor + '55, 0 0 22px ' + ringColor, 'important');
   }
 }
 
@@ -1913,6 +1913,7 @@ window.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
 
 
 
