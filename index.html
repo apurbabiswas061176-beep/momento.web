@@ -1845,8 +1845,31 @@ async function loadLiveRightWidgets() {
 }
 window.addEventListener("load", () => { loadLiveRightWidgets(); setInterval(loadLiveRightWidgets, 4000); });
 </script>
+<script>
+function setUserMood(moodText, btn) {
+  document.getElementById('activeMoodLabel').innerHTML = moodText;
+  localStorage.setItem('momento_user_mood', moodText);
+  document.querySelectorAll('.mood-pill').forEach(b => {
+    b.style.background = '#1e293b';
+    b.style.border = '1px solid #334155';
+    b.style.color = '#e2e8f0';
+  });
+  if (btn) {
+    btn.style.background = 'linear-gradient(135deg,#172554,#1e3a8a)';
+    btn.style.border = '1px solid #3b82f6';
+    btn.style.color = '#fff';
+  }
+}
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('momento_user_mood');
+  if (saved && document.getElementById('activeMoodLabel')) {
+    document.getElementById('activeMoodLabel').innerHTML = saved;
+  }
+});
+</script>
 </body>
 </html>
+
 
 
 
