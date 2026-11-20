@@ -621,15 +621,15 @@
       <div class="m-brand-icon">M</div>
       <span>Momento</span>
     </div>
-    <nav>
-      <button type="button" class="m-side-btn active" onclick="navHome()"><span>&#127968;</span> Home</button>
-      <button type="button" class="m-side-btn" onclick="openFollowModal('discover')"><span>&#129517;</span> Explore</button>
-      <button type="button" class="m-side-btn" onclick="switchProfileContentTab('reels')"><span>&#127916;</span> Reels</button>
-      <button type="button" class="m-side-btn" onclick="openFollowModal('following')"><span>&#128172;</span> Messages <span class="m-msg-badge">3</span></button>
-      <button type="button" class="m-side-btn" onclick="openFollowModal('followers')"><span>&#128276;</span> Notifications</button>
-      <button type="button" class="m-side-btn" onclick="openCreatePicker()"><span>&#10133;</span> Create</button>
-      <button type="button" class="m-side-btn" onclick="navProfile()"><span>&#128100;</span> Profile</button>
-    </nav>
+    <nav id="momentoMainNav">
+<button type="button" class="m-side-btn active" onclick="setActiveNav(this); navHome();"><span>&#127968;</span> Home</button>
+<button type="button" class="m-side-btn" onclick="setActiveNav(this); openMomentoHub('explore');"><span>&#129517;</span> Explore</button>
+<button type="button" class="m-side-btn" onclick="setActiveNav(this); openMomentoHub('reels');"><span>&#127916;</span> Reels</button>
+<button type="button" class="m-side-btn" onclick="setActiveNav(this); openMomentoHub('messages');"><span>&#128172;</span> Messages <span class="m-msg-badge" id="navMsgBadge">3</span></button>
+<button type="button" class="m-side-btn" onclick="setActiveNav(this); openMomentoHub('notifications');"><span>&#128276;</span> Notifications</button>
+<button type="button" class="m-side-btn" onclick="setActiveNav(this); openCreatePicker();"><span>&#10133;</span> Create</button>
+<button type="button" class="m-side-btn" onclick="setActiveNav(this); navProfile();"><span>&#128100;</span> Profile</button>
+</nav>
   </div>
   <div>
     <div class="m-premium-card">
@@ -1898,7 +1898,51 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 200);
 });
 </script>
+
+<div id="momentoHubModal" style="display:none;position:fixed;inset:0;background:rgba(5,8,18,0.82);backdrop-filter:blur(8px);z-index:9999;align-items:center;justify-content:center;padding:16px;">
+  <div style="background:#111625;border:1px solid #26314d;border-radius:16px;width:100%;max-width:540px;max-height:82vh;display:flex;flex-direction:column;overflow:hidden;color:#f1f5f9;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #1e293b;">
+      <h3 id="hubTitle" style="margin:0;font-size:17px;font-weight:700;">Explore</h3>
+      <button type="button" onclick="closeMomentoHub()" style="background:#1e293b;border:none;color:#94a3b8;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;">&times;</button>
+    </div>
+    <div id="hubBody" style="padding:18px 20px;overflow-y:auto;flex:1;"></div>
+  </div>
+</div>
+<script>
+function setActiveNav(btn) {
+  document.querySelectorAll("#momentoMainNav .m-side-btn").forEach(function(b) { b.classList.remove("active"); });
+  if (btn) btn.classList.add("active");
+}
+function closeMomentoHub() {
+  document.getElementById("momentoHubModal").style.display = "none";
+}
+function openMomentoHub(tab) {
+  var m = document.getElementById("momentoHubModal");
+  var title = document.getElementById("hubTitle");
+  var body = document.getElementById("hubBody");
+  m.style.display = "flex";
+  if (tab === "explore") {
+    title.textContent = "Explore Momento";
+    body.innerHTML = '<p style="color:#94a3b8;font-size:13px;margin-top:0;">Discover creators, trending moods, and live posts across Momento.</p><button type="button" onclick="closeMomentoHub();if(typeof openFollowModal===\'function\')openFollowModal(\'discover\');" style="width:100%;background:#2563eb;color:#fff;border:none;border-radius:10px;padding:11px;font-weight:600;cursor:pointer;">Browse All Real Users &rarr;</button>';
+  } else if (tab === "reels") {
+    title.textContent = "Momento Reels";
+    body.innerHTML = '<p style="color:#94a3b8;font-size:13px;margin-top:0;">Watch creator reels or share a short video clip.</p><div style="display:flex;gap:10px;"><button type="button" onclick="closeMomentoHub();if(typeof navProfile===\'function\')navProfile();if(typeof switchProfileContentTab===\'function\')switchProfileContentTab(\'reels\');" style="flex:1;background:#1e293b;color:#fff;border:1px solid #334155;border-radius:9px;padding:10px;cursor:pointer;">My Reels</button><button type="button" onclick="closeMomentoHub();if(typeof openCreatePicker===\'function\')openCreatePicker();" style="flex:1;background:#2563eb;color:#fff;border:none;border-radius:9px;padding:10px;font-weight:600;cursor:pointer;">+ Upload Reel</button></div>';
+  } else if (tab === "messages") {
+    title.textContent = "Direct Messages";
+    var b = document.getElementById("navMsgBadge");
+    if (b) b.style.display = "none";
+    body.innerHTML = '<div id="hubChatList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;"><div style="background:#0b0f19;border:1px solid #1e293b;border-radius:10px;padding:10px 12px;font-size:13px;"><strong style="color:#60a5fa;">Momento Team:</strong> Welcome! Try linking a Co-DP with a friend using Duo Link.</div></div><form onsubmit="event.preventDefault();var i=document.getElementById(\'hubMsgInput\');if(!i.value.trim())return;var d=document.createElement(\'div\');d.style.cssText=\'background:#172554;border-radius:10px;padding:9px 12px;font-size:13px;\';d.textContent=i.value;document.getElementById(\'hubChatList\').appendChild(d);i.value=\'\';" style="display:flex;gap:8px;"><input id="hubMsgInput" type="text" placeholder="Write a message..." style="flex:1;background:#0b0f19;border:1px solid #26314d;border-radius:9px;padding:9px 12px;color:#fff;font-size:13px;"><button type="submit" style="background:#2563eb;color:#fff;border:none;border-radius:9px;padding:9px 16px;font-weight:600;cursor:pointer;">Send</button></form>';
+  } else if (tab === "notifications") {
+    title.textContent = "Notifications";
+    body.innerHTML = '<div style="display:flex;flex-direction:column;gap:10px;font-size:13px;"><div style="background:#0b0f19;border:1px solid #1e293b;border-radius:10px;padding:10px 12px;">Your <strong>Mood Ring</strong> is active on your profile.</div><div style="background:#0b0f19;border:1px solid #1e293b;border-radius:10px;padding:10px 12px;">Invite any friend to link avatars with <strong>Duo Link (Co-DP)</strong>.</div></div>';
+  }
+}
+document.addEventListener("click", function(e) {
+  if (e.target === document.getElementById("momentoHubModal")) closeMomentoHub();
+});
+</script>
 </body>
+
 </html>
 
 
