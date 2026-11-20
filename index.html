@@ -1926,19 +1926,19 @@ function setActiveNav(btn) {
 }
 function toggleProfileCards(show) {
   var sector = document.getElementById("momentoSectorView");
-  if (!sector) return;
-  sector.style.display = show ? "none" : "block";
-  sector.style.width = "100%";
-  var col = sector.parentElement;
-  if (col) {
-    col.style.width = "100%";
-    Array.from(col.children).forEach(function(ch) {
-      if (ch.id === "momentoSectorView") return;
-      if (ch.querySelector && ch.querySelector("#searchInput")) return;
-      if (show) { ch.style.display = ch.dataset.origD || ""; }
-      else { if (!ch.dataset.origD && ch.style.display) ch.dataset.origD = ch.style.display; ch.style.setProperty("display", "none", "important"); }
-    });
+  if (sector) {
+    sector.style.setProperty("display", show ? "none" : "block", "important");
+    sector.style.width = "100%";
   }
+  var cover = document.getElementById("coverPhotoInput");
+  if (cover && cover.parentElement) cover.parentElement.style.setProperty("display", show ? "" : "none", "important");
+  document.querySelectorAll(".card").forEach(function(el) {
+    if (!el.closest("#momentoSectorView")) el.style.setProperty("display", show ? "" : "none", "important");
+  });
+  ["moodSelectorBox", "profileContentTabs", "feedList"].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.style.setProperty("display", show ? (id === "profileContentTabs" ? "flex" : "") : "none", "important");
+  });
 }
 
 var _origNavHome = typeof navHome === "function" ? navHome : null;
