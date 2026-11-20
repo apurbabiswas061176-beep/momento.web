@@ -8,6 +8,7 @@
   </div>
   <div id="sectorBody" style="padding:18px 20px;"></div>
 </div>
+
 CTYPE html>
 <html lang="en">
 <head>
@@ -934,7 +935,6 @@ CTYPE html>
   </div>
 
       
-
 <!-- Feed -->
 
       <div id="feedList"></div>
@@ -1939,7 +1939,7 @@ function toggleProfileCards(show) {
   });
   ["moodSelectorBox", "profileContentTabs", "feedList"].forEach(function(id) {
     var el = document.getElementById(id);
-    if (el) { el.style.setProperty("display", show ? (id === "profileContentTabs" ? "flex" : "") : "none", "important"); if (id === "profileContentTabs" && el.nextElementSibling && el.nextElementSibling.id !== "momentoSectorView") el.nextElementSibling.style.setProperty("display", show ? "" : "none", "important"); }
+    if (el) { el.style.setProperty("display", show ? (id === "profileContentTabs" ? "flex" : "") : "none", "important"); if (id === "profileContentTabs" && el.nextElementSibling) el.nextElementSibling.style.setProperty("display", show ? "" : "none", "important"); }
   });
 }
 
