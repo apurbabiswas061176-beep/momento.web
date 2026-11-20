@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿<!DO
+<div id="momentoSectorView" style="display:none;background:#111625;border:1px solid #26314d;border-radius:16px;overflow:hidden;margin-bottom:16px;color:#f1f5f9;">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #1e293b;background:#0d1220;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <h2 id="sectorTitle" style="margin:0;font-size:18px;font-weight:700;">Messages</h2>
+    </div>
+    <button type="button" onclick="setActiveNav(document.querySelector('#momentoMainNav .m-side-btn')); navHome();" style="width:auto;margin:0;background:#1e293b;border:1px solid #334155;color:#cbd5e1;padding:6px 12px;border-radius:8px;font-size:12px;cursor:pointer;">&larr; Back to Profile</button>
+  </div>
+  <div id="sectorBody" style="padding:18px 20px;"></div>
+</div>
+CTYPE html>
 <html lang="en">
 <head>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://w3.org viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%233b82f6%22/><text x=%2250%25%22 y=%2255%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23fff%22 font-family=%22Arial%22 font-weight=%22bold%22 font-size=%2236%22>M</text></svg>">
@@ -924,15 +934,7 @@
   </div>
 
       
-<div id="momentoSectorView" style="display:none;background:#111625;border:1px solid #26314d;border-radius:16px;overflow:hidden;margin-bottom:16px;color:#f1f5f9;">
-  <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #1e293b;background:#0d1220;">
-    <div style="display:flex;align-items:center;gap:10px;">
-      <h2 id="sectorTitle" style="margin:0;font-size:18px;font-weight:700;">Messages</h2>
-    </div>
-    <button type="button" onclick="setActiveNav(document.querySelector('#momentoMainNav .m-side-btn')); navHome();" style="width:auto;margin:0;background:#1e293b;border:1px solid #334155;color:#cbd5e1;padding:6px 12px;border-radius:8px;font-size:12px;cursor:pointer;">&larr; Back to Profile</button>
-  </div>
-  <div id="sectorBody" style="padding:18px 20px;"></div>
-</div>
+
 <!-- Feed -->
 
       <div id="feedList"></div>
@@ -1937,7 +1939,7 @@ function toggleProfileCards(show) {
   });
   ["moodSelectorBox", "profileContentTabs", "feedList"].forEach(function(id) {
     var el = document.getElementById(id);
-    if (el) el.style.setProperty("display", show ? (id === "profileContentTabs" ? "flex" : "") : "none", "important");
+    if (el) { el.style.setProperty("display", show ? (id === "profileContentTabs" ? "flex" : "") : "none", "important"); if (id === "profileContentTabs" && el.nextElementSibling && el.nextElementSibling.id !== "momentoSectorView") el.nextElementSibling.style.setProperty("display", show ? "" : "none", "important"); }
   });
 }
 
@@ -1982,7 +1984,7 @@ function renderMessagesSector() {
         '<div id="sectorChatFeed" style="display:flex;flex-direction:column;gap:8px;padding:12px 0;min-height:220px;max-height:280px;overflow-y:auto;">' + msgsHtml + '</div>' +
         '<form onsubmit="sendSectorMsg(event)" style="display:flex;gap:8px;margin-top:8px;">' +
           '<input id="sectorMsgInput" type="text" placeholder="Type a message to ' + activeChatUser + '..." style="flex:1;margin:0;background:#0b0f19;border:1px solid #26314d;border-radius:10px;padding:10px 12px;color:#fff;font-size:13px;" /' + '>' +
-          '<button type="submit" style="width:auto;margin:0;background:#2563eb;color:#fff;border:none;border-radius:10px;padding:10px 18px;font-weight:600;cursor:pointer;">Send</button>' +
+          '<button type="submit" style="width:auto;margin:0;background:#00a884;color:#052e16;border:none;border-radius:20px;padding:10px 18px;font-weight:600;cursor:pointer;">Send</button>' +
         '</form>' +
       '</div>' +
     '</div>';
