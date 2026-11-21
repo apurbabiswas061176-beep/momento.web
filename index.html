@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿<!DO
 <html lang="en">
 <head>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://w3.org viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%233b82f6%22/><text x=%2250%25%22 y=%2255%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23fff%22 font-family=%22Arial%22 font-weight=%22bold%22 font-size=%2236%22>M</text></svg>">
@@ -633,8 +633,8 @@
     </div>
     <nav>
       <button type="button" class="m-side-btn active" onclick="navHome()"><span>&#127968;</span> Home</button>
-      <button type="button" class="m-side-btn" onclick="openFollowModal('discover')"><span>&#129517;</span> Explore</button>
-      <button type="button" class="m-side-btn" onclick="switchProfileContentTab('reels')"><span>&#127916;</span> Reels</button>
+      <button type="button" class="m-side-btn" onclick="openMessagesModal()"><span>&#129517;</span> Explore</button>
+      <button type="button" class="m-side-btn" onclick="openMessagesModal()"><span>&#127916;</span> Reels</button>
       <button type="button" class="m-side-btn" onclick="openMessagesModal()"><span>&#128172;</span> Messages <span class="m-msg-badge">3</span></button>
       <button type="button" class="m-side-btn" onclick="openFollowModal('followers')"><span>&#128276;</span> Notifications</button>
       <button type="button" class="m-side-btn" onclick="openCreatePicker()"><span>&#10133;</span> Create</button>
@@ -808,8 +808,6 @@
           <!-- Clean Instagram-Style Direct Messages Modal -->
     <div id="messagesModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1100;align-items:center;justify-content:center;padding:16px;">
       <div style="background:#0e1017;border:1px solid #262b3d;border-radius:16px;width:100%;max-width:780px;height:540px;max-height:88vh;display:flex;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.7);">
-        
-        <!-- Left Conversations List -->
         <div style="width:270px;border-right:1px solid #262b3d;display:flex;flex-direction:column;background:#121520;flex-shrink:0;">
           <div style="padding:16px;border-bottom:1px solid #262b3d;display:flex;justify-content:space-between;align-items:center;">
             <span style="font-weight:700;font-size:16px;color:#fff;">Messages</span>
@@ -821,8 +819,6 @@
           </div>
           <div id="dmThreadList" style="flex:1;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:4px;"></div>
         </div>
-
-        <!-- Right Active Chat Window -->
         <div style="flex:1;display:flex;flex-direction:column;background:#0b0d14;min-width:0;">
           <div style="padding:14px 18px;border-bottom:1px solid #262b3d;display:flex;align-items:center;justify-content:space-between;">
             <div style="display:flex;align-items:center;gap:10px;">
@@ -834,15 +830,12 @@
             </div>
             <button type="button" onclick="closeMessagesModal()" style="width:auto;margin:0;padding:6px 12px;font-size:12px;background:#1e2334;color:#d1d5db;border-radius:8px;cursor:pointer;">Close</button>
           </div>
-
           <div id="dmChatBox" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px;"></div>
-
           <form onsubmit="sendDmMessage(event)" style="padding:12px 16px;border-top:1px solid #262b3d;display:flex;gap:8px;align-items:center;">
             <input id="dmMsgInput" placeholder="Message..." autocomplete="off" style="margin:0;flex:1;padding:10px 14px;border-radius:999px;background:#161a26;border:1px solid #2d344b;color:#fff;font-size:13px;" />
             <button type="submit" style="width:auto;margin:0;padding:9px 18px;border-radius:999px;background:#0095f6;color:#fff;font-weight:600;font-size:13px;cursor:pointer;">Send</button>
           </form>
         </div>
-
       </div>
     </div>
 
@@ -1919,8 +1912,7 @@ window.addEventListener("load", () => { loadLiveRightWidgets(); setInterval(load
   function renderDmThreads() {
     const list = document.getElementById('dmThreadList');
     if (!list) return;
-    const users = Object.keys(dmStore);
-    list.innerHTML = users.map(u => {
+    list.innerHTML = Object.keys(dmStore).map(u => {
       const msgs = dmStore[u] || [];
       const last = msgs.length ? msgs[msgs.length - 1].text : 'No messages yet';
       const isActive = u === activeDmUser;
@@ -1940,17 +1932,13 @@ window.addEventListener("load", () => { loadLiveRightWidgets(); setInterval(load
     document.getElementById('dmActiveName').textContent = activeDmUser;
     document.getElementById('dmActiveAvatar').textContent = activeDmUser[0].toUpperCase();
     renderDmThreads();
-
     const box = document.getElementById('dmChatBox');
     const msgs = dmStore[activeDmUser];
     if (!msgs.length) {
       box.innerHTML = `<div style="text-align:center;color:#6b7280;font-size:12px;margin-top:40px;">Start a conversation with <strong>${activeDmUser}</strong></div>`;
       return;
     }
-    box.innerHTML = msgs.map(m => {
-      const isMe = m.from === 'me';
-      return `<div style="align-self:${isMe ? 'flex-end' : 'flex-start'};max-width:72%;padding:9px 14px;border-radius:18px;font-size:13px;line-height:1.4;background:${isMe ? '#0095f6' : '#1e2334'};color:#fff;">${m.text}</div>`;
-    }).join('');
+    box.innerHTML = msgs.map(m => `<div style="align-self:${m.from === 'me' ? 'flex-end' : 'flex-start'};max-width:72%;padding:9px 14px;border-radius:18px;font-size:13px;line-height:1.4;background:${m.from === 'me' ? '#0095f6' : '#1e2334'};color:#fff;">${m.text}</div>`).join('');
     box.scrollTop = box.scrollHeight;
   }
 
@@ -1962,28 +1950,16 @@ window.addEventListener("load", () => { loadLiveRightWidgets(); setInterval(load
     selectDmThread(clean);
   }
 
-  async function sendDmMessage(e) {
+  function sendDmMessage(e) {
     e.preventDefault();
     const input = document.getElementById('dmMsgInput');
     const text = input.value.trim();
     if (!text) return;
     input.value = '';
-
     if (!dmStore[activeDmUser]) dmStore[activeDmUser] = [];
     dmStore[activeDmUser].push({ from: 'me', text });
     localStorage.setItem('momento_dms', JSON.stringify(dmStore));
     selectDmThread(activeDmUser);
-
-    // Optional: safely notify backend if endpoint exists without ever leaking HTML
-    try {
-      if (typeof API !== 'undefined') {
-        await fetch(API + '/api/messages/send/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ to: activeDmUser, text })
-        });
-      }
-    } catch (_) {}
   }
 </script>
 </body>
