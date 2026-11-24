@@ -1978,6 +1978,13 @@ async function selectDmThread(user) {
   }
 }
 
+function startDmChat() {
+  const input = document.getElementById('dmSearchInput');
+  const clean = cleanDmUsername(input.value);
+  if (!clean) return;
+  input.value = '';
+  selectDmThread(clean);
+}
 async function sendDmMessage(e) {
   e.preventDefault();
   const input = document.getElementById('dmMsgInput');
@@ -2016,6 +2023,7 @@ setInterval(() => {
 </script>
 </body>
 </html>
+
 
 
 
