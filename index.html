@@ -1891,7 +1891,7 @@ async function loadLiveRightWidgets() {
 window.addEventListener("load", () => { loadLiveRightWidgets(); setInterval(loadLiveRightWidgets, 4000); });
 </script>
 <script>
-  const dmStore = JSON.parse(localStorage.getItem('momento_dms') || '{"momento_team":[{"from":"them","text":"Welcome to Momento! Type a username on the left to start chatting."}]}');
+  let dmStore = JSON.parse(localStorage.getItem('momento_dms') || '{"momento_team":[{"from":"them","text":"Welcome to Momento! Type a username on the left to start chatting."}]}');
   let activeDmUser = 'momento_team';
 
   function cleanDmUsername(raw) {
@@ -1989,6 +1989,7 @@ setInterval(() => {
 </script>
 </body>
 </html>
+
 
 
 
