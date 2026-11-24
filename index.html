@@ -1900,7 +1900,32 @@ window.addEventListener("load", () => { loadLiveRightWidgets(); setInterval(load
     return trimmed.includes('@') ? trimmed.split('@') : trimmed;
   }
 
-  function openMessagesModal() {
+  function closeMessagesModal() {
+  const modal = document.getElementById('messagesModal');
+  if (modal) modal.style.display = 'none';
+}
+
+function renderDmThreads() {
+  const list = document.getElementById('dmThreadList');
+  if (!list) return;
+  const users = Object.keys(dmStore);
+  if (!users.length) {
+    list.innerHTML = '<div style="padding:14px;color:#6b7280;font-size:12px;">No conversations yet</div>';
+    return;
+  }
+  list.innerHTML = users.map(u => {
+    const msgs = dmStore[u] || [];
+    const last = msgs.length ? msgs[msgs.length - 1].text : 'Tap to chat';
+    const isActive = u === activeDmUser;
+    return '<div onclick="selectDmThread(\'' + u.replace(/'/g, "\\'") + '\')" style="padding:10px 12px;border-radius:10px;cursor:pointer;display:flex;align-items:center;gap:10px;margin-bottom:4px;background:' + (isActive ? '#1e2334' : 'transparent') + ';">' +
+      '<div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0095f6,#8b5cf6);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex-shrink:0;">' + u.slice(0, 2).toUpperCase() + '</div>' +
+      '<div style="min-width:0;flex:1;">' +
+        '<div style="font-weight:600;font-size:13px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + u + '</div>' +
+        '<div style="font-size:11px;color:#9ca3af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + last + '</div>' +
+      '</div></div>';
+  }).join('');
+}
+function openMessagesModal() {
   const modal = document.getElementById('messagesModal');
   if (modal) {
     modal.style.display = 'flex';
@@ -1989,6 +2014,7 @@ setInterval(() => {
 </script>
 </body>
 </html>
+
 
 
 
