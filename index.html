@@ -159,24 +159,7 @@
       font-size: 17px;
       box-shadow: 0 0 14px rgba(59,130,246,0.45);
     }
-    .m-side-btn {
-      display: flex !important;
-      align-items: center !important;
-      gap: 12px !important;
-      width: 100% !important;
-      padding: 10px 14px !important;
-      margin: 2px 0 !important;
-      background: transparent !important;
-      border: none !important;
-      border-left: 3px solid transparent !important;
-      border-radius: 10px !important;
-      color: #94a3b8 !important;
-      font-size: 14px !important;
-      font-weight: 500 !important;
-      text-align: left !important;
-      cursor: pointer;
-    }
-    .m-side-btn:hover, .m-side-btn.active {
+.m-side-btn:hover, .m-side-btn.active {
       background: rgba(59, 130, 246, 0.16) !important;
       border-left-color: #3b82f6 !important;
       color: #fff !important;
@@ -625,38 +608,6 @@
 
     <!-- Main App Section -->
     <div id="appBox" class="hidden">
-<aside id="desktopLeftSidebar">
-  <div>
-    <div class="m-brand">
-      <div class="m-brand-icon">M</div>
-      <span>Momento</span>
-    </div>
-    <nav>
-      <button type="button" class="m-side-btn active" onclick="navHome()"><span>&#127968;</span> Home</button>
-      <button type="button" class="m-side-btn" onclick="openMessagesModal()"><span>&#129517;</span> Explore</button>
-      <button type="button" class="m-side-btn" onclick="openMessagesModal()"><span>&#127916;</span> Reels</button>
-      <button type="button" class="m-side-btn" onclick="openMessagesModal()"><span>&#128172;</span> Messages <span class="m-msg-badge">3</span></button>
-      <button type="button" class="m-side-btn" onclick="openFollowModal('followers')"><span>&#128276;</span> Notifications</button>
-      <button type="button" class="m-side-btn" onclick="openCreatePicker()"><span>&#10133;</span> Create</button>
-      <button type="button" class="m-side-btn" onclick="navProfile()"><span>&#128100;</span> Profile</button>
-    </nav>
-  </div>
-  <div>
-    <div class="m-premium-card">
-      <div style="font-size:20px;">&#128081;</div>
-      <h4>Go Premium</h4>
-      <p>Unlock more features</p>
-      <button type="button" class="m-upgrade-btn" onclick="openEditModal()">Upgrade &#8594;</button>
-    </div>
-    <div style="display:flex;align-items:center;justify-content:center;gap:10px;padding-top:4px;">
-      <span>&#9728;&#65039;</span>
-      <button type="button" onclick="document.body.classList.toggle('light-mode')" style="width:44px;height:22px;border-radius:99px;background:#2563eb;padding:2px;margin:0;">
-        <span style="display:block;width:16px;height:16px;border-radius:50%;background:#fff;margin-left:auto;"></span>
-      </button>
-      <span>&#127769;</span>
-    </div>
-  </div>
-</aside>
 <div id="desktopCenterCol" style="min-width:0;">
 
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:#111625;border:1px solid #1e263d;border-radius:14px;padding:8px 14px;margin-bottom:12px;">
@@ -667,7 +618,7 @@
   <div style="display:flex;align-items:center;gap:8px;">
     <button type="button" onclick="openFollowModal('discover')" title="Find People" style="width:34px;height:34px;border-radius:50%;background:#161e31;border:1px solid #26314d;color:#cbd5e1;padding:0;margin:0;">&#128101;</button>
     <button type="button" onclick="openFollowModal('followers')" title="Notifications" style="width:34px;height:34px;border-radius:50%;background:#161e31;border:1px solid #26314d;color:#cbd5e1;padding:0;margin:0;">&#128276;</button>
-    <button type="button" onclick="logout()" title="Log Out" style="width:auto;height:34px;border-radius:10px;background:#3f1d24;border:1px solid #7f1d1d;color:#fda4af;padding:0 12px;margin:0;font-size:12px;">Log Out</button>
+    <button type="button" id="topMessagesBtn" onclick="openMessagesModal()" style="background:#0095f6;color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;">Messages</button> <button type="button" onclick="logout()" title="Log Out" style="width:auto;height:34px;border-radius:10px;background:#3f1d24;border:1px solid #7f1d1d;color:#fda4af;padding:0 12px;margin:0;font-size:12px;">Log Out</button>
   </div>
 </div>
 <div class="profile-shell">
@@ -780,27 +731,6 @@
 
 
 </div>
-<aside id="desktopRightSidebar">
-  <div class="m-widget-card">
-    <div class="m-widget-head">
-      <span>Suggested People</span>
-      <a href="javascript:void(0)" onclick="openFollowModal('discover')">See All &#8594;</a>
-    </div>
-    <div id="rightSuggestedUsers">
-      <div style="font-size:12px;color:#94a3b8;padding:8px 0;">Loading real users...</div>
-    </div>
-  </div>
-
-  <div class="m-widget-card">
-    <div class="m-widget-head">
-      <span>Trending</span>
-      <a href="javascript:void(0)" onclick="openFollowModal('discover')">See All &#8594;</a>
-    </div>
-    <div id="rightTrendingList">
-      <div style="font-size:12px;color:#94a3b8;padding:8px 0;">Scanning posts...</div>
-    </div>
-  </div>
-</aside>
 <div id="addMemoryModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:999;align-items:center;justify-content:center;padding:16px;">
         <div style="background:#16161a;border:1px solid #2e2e36;border-radius:16px;padding:18px;width:100%;max-width:360px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
@@ -978,7 +908,7 @@
   <button type="button" onclick="openCreateComposer('post')" style="width:auto;margin:0;background:linear-gradient(135deg,#2563eb,#7c3aed);border:none;color:#fff;border-radius:10px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;">Post</button>
 </div>
 
-<button style="background:#333;" onclick="logout()">Log Out</button>
+<button type="button" id="topMessagesBtn" onclick="openMessagesModal()" style="background:#0095f6;color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;">Messages</button> <button style="background:#333;" onclick="logout()">Log Out</button>
     </div>
   </div>
 
@@ -2027,6 +1957,7 @@ setInterval(() => {
 </script>
 </body>
 </html>
+
 
 
 
