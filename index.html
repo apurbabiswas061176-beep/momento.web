@@ -1925,13 +1925,26 @@ function renderDmThreads() {
       '</div></div>';
   }).join('');
 }
+async function loadAllDmThreads() {
+  if (!currentUser || !currentUser.email) return;
+  try {
+    const res = await fetch(API + '/api/messages/threads/?email=' + encodeURIComponent(currentUser.email));
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data && data.threads) {
+      dmStore = Object.assign({}, dmStore, data.threads);
+      renderDmThreads();
+    }
+  } catch (e) {}
+}
+
 function openMessagesModal() {
   const modal = document.getElementById('messagesModal');
   if (modal) {
-    modal.style.display = 'flex';
+    modal.style.setProperty('display', 'flex', 'important');
     renderDmThreads();
     selectDmThread(activeDmUser);
-    if (typeof loadAllDmThreads === 'function') loadAllDmThreads();
+    loadAllDmThreads();
   }
 }
 
@@ -2014,6 +2027,7 @@ setInterval(() => {
 </script>
 </body>
 </html>
+
 
 
 
