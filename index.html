@@ -1901,47 +1901,13 @@ window.addEventListener("load", () => { loadLiveRightWidgets(); setInterval(load
   }
 
   function openMessagesModal() {
-    const modal = document.getElementById('messagesModal');
-    if (modal) {
-      modal.style.display = 'flex';
-      renderDmThreads();
-      selectDmThread(activeDmUser);
-    }
+  const modal = document.getElementById('messagesModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    renderDmThreads();
+    selectDmThread(activeDmUser);
+    if (typeof loadAllDmThreads === 'function') loadAllDmThreads();
   }
-
-  function closeMessagesModal() {
-    const modal = document.getElementById('messagesModal');
-    if (modal) modal.style.display = 'none';
-  }
-
-  function renderDmThreads() {
-    const list = document.getElementById('dmThreadList');
-    if (!list) return;
-    list.innerHTML = Object.keys(dmStore).map(u => {
-      const msgs = dmStore[u] || [];
-      const last = msgs.length ? msgs[msgs.length - 1].text : 'No messages yet';
-      const isActive = u === activeDmUser;
-      return `<div onclick="selectDmThread('${u}')" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;cursor:pointer;background:${isActive ? '#1e2438' : 'transparent'};">
-        <div style="width:36px;height:36px;border-radius:50%;background:#2563eb;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;flex-shrink:0;">${u.toUpperCase()}</div>
-        <div style="min-width:0;flex:1;">
-          <div style="font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${u}</div>
-          <div style="font-size:11px;color:#9ca3af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${last}</div>
-        </div>
-      </div>`;
-    }).join('');
-  }
-
-  async function loadAllDmThreads() {
-  if (!currentUser || !currentUser.email) return;
-  try {
-    const res = await fetch(API + '/api/messages/threads/?email=' + encodeURIComponent(currentUser.email));
-    if (!res.ok) return;
-    const data = await res.json();
-    if (data && data.threads) {
-      dmStore = Object.assign({}, dmStore, data.threads);
-      renderDmThreads();
-    }
-  } catch (e) {}
 }
 
 async function selectDmThread(user) {
@@ -2014,7 +1980,7 @@ async function sendDmMessage(e) {
 }
 
 setInterval(() => {
-  const modal = document.getElementById('dmModal');
+  const modal = document.getElementById('messagesModal');
   if (modal && modal.style.display !== 'none' && modal.style.display !== '') {
     if (activeDmUser) selectDmThread(activeDmUser);
     else loadAllDmThreads();
@@ -2023,6 +1989,7 @@ setInterval(() => {
 </script>
 </body>
 </html>
+
 
 
 
